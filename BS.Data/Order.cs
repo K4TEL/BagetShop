@@ -25,7 +25,7 @@ namespace BagetShop
 
         public override string ToString()
         {
-            return this.Amount.ToString() + "x" + this.Baget.ToString();
+            return this.Amount.ToString() + " - " + this.Baget.ToString();
         }
     }
 }
