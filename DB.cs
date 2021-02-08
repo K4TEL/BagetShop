@@ -39,7 +39,7 @@ namespace BagetShop
 
             foreach(Material mat in Enum.GetValues(typeof(Material)))
             {
-                Storage.Add(mat, 100);
+                Storage.Add(mat, 10);
             }
         }
     }

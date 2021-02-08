@@ -21,25 +21,6 @@ namespace BagetShop
 
         public Baget() : base() { }
 
-        public void SetBaget()
-        {
-            foreach(BagetType bt in BagetType.Objects)
-            {
-                Console.Write(bt + " ");
-            }
-            Console.WriteLine(" ");
-            Console.WriteLine("Choose type from above: ");
-            this.BagetType = BagetType.getByName(Console.ReadLine());
-
-            Console.WriteLine("Set width in cm: ");
-            this.Width = Convert.ToDouble(Console.ReadLine());
-
-            Console.WriteLine("Set lenght in cm: ");
-            this.Lenght = Convert.ToDouble(Console.ReadLine());
-
-            Console.WriteLine(this);
-        }
-
         public override string ToString()
         {
             return this.BagetType.ToString() + " (" + this.Width.ToString() + "x" +

@@ -23,16 +23,6 @@ namespace BagetShop
             this.Baget = new Baget();
         }
 
-        public void setOrder()
-        {
-            Baget.SetBaget();
-
-            Console.WriteLine("Set the amount: ");
-            this.Amount = Convert.ToInt32(Console.ReadLine());
-
-            Console.WriteLine(this);
-        }
-
         public override string ToString()
         {
             return this.Amount.ToString() + " - " + this.Baget.ToString();

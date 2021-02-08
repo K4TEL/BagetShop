@@ -35,6 +35,7 @@ namespace BagetShop.BS.Data
             Console.WriteLine("Enough materials in stock");
             return true;
             }
+
         public Calc(DB db, BagetType bt, double w, double l, int a)
         {
             this.db = db;
