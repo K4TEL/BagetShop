@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BagetShop.Baget">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAEAAAAAAAEAAAAAACAAAAAA=</HashCode>
+      <FileName>BS.Data\Baget.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="BagetType" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="BagetShop.BagetType">
+    <Position X="5.25" Y="3" Width="1.5" />
+    <InheritanceLine Type="BagetShop.Base&lt;T&gt;" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.5" Y="3.312" />
+        <Point X="4.875" Y="3.312" />
+        <Point X="4.875" Y="3.313" />
+        <Point X="5.25" Y="3.313" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAEAAAAEAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>BS.Data\BagetType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BagetShop.Base&lt;T&gt;">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>BS.Data\Base.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BagetShop.BS.Data.Calc">
+    <Position X="0.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAABQAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BS.Data\Calc.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="db" />
+      <Field Name="order" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="BagetShop.Order">
+    <Position X="0.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAACABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BS.Data\Order.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Baget" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="BagetShop.DB">
+    <Position X="3" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>DB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BagetShop.Program">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BagetShop.FormCalc">
+    <Position X="7.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAACAAAACAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>FormCalc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="BagetShop.Material" Collapsed="true">
+    <Position X="7.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAIAAAAAAAABAAAAABAAAAQAAoCAAAAAAAAACioCAE=</HashCode>
+      <FileName>BS.Data\BagetType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
