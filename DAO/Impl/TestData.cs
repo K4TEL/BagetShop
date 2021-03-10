@@ -22,7 +22,7 @@ namespace BagetShop.DAO.Impl
             Material mat4 = new Material("Gold", 500, Material.Units.g, true);
             
             Type type1 = new Type("Silver Glass");
-            Material m1 = new Material("Glass", 1, type1);
+            Material m1 = new Material("Glass", 2, type1);
             Material m2 = new Material("Silver", 200, type1);
             type1.Materials.AddRange(new List<Material>() { m1, m2});
 
