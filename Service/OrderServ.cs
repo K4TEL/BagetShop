@@ -16,6 +16,11 @@ namespace BagetShop.Service
         {
             this.UOW = uow;
         }
+
+        public OrderServ()
+        {
+            this.UOW = new UnitOfWork();
+        }
         public bool isEnough(Order order)
         {
             bool enough = true;
@@ -44,6 +49,11 @@ namespace BagetShop.Service
             }
 
             return enough;
+        }
+
+        public IUnitOfWork GetUOW()
+        {
+            return UOW;
         }
     }
 }

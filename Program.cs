@@ -1,11 +1,12 @@
-﻿using BagetShop.DAO.Impl;
+﻿using BagetShop.DAO;
+using BagetShop.DAO.Impl;
 using BagetShop.Model;
 using BagetShop.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using WpfBaget;
 
 namespace BagetShop
 {
@@ -17,11 +18,8 @@ namespace BagetShop
         [STAThread]
         static void Main()
         {
-            DB Database = new DB();
-            TestData td = new TestData(Database);
-
-            UnitOfWork uow = new UnitOfWork(Database);
-            OrderServ orderServ = new OrderServ(uow);
+            IUnitOfWork uow = new UnitOfWork();
+            IOrderServ orderServ = new OrderServ();
 
             Order order = new Order();
             order.Customer = "Mike";
@@ -34,6 +32,9 @@ namespace BagetShop
             uow.GetBagetRep().AddBaget(order, baget2);
 
             Console.WriteLine(orderServ.isEnough(order));
+
+            MainWindow win = new MainWindow();
+            new App().Run(win);
         }
     }
 }

@@ -19,6 +19,11 @@ namespace BagetShop.DAO.Impl
         {
             this.Database = database;
         }
+        public UnitOfWork()
+        {
+            this.Database = new DB();
+            TestData test = new TestData(this.Database);
+        }
         public IBagetRep GetBagetRep()
         {
             if (BagetRep == null)

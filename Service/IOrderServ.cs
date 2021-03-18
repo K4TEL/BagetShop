@@ -1,4 +1,5 @@
-﻿using BagetShop.Model;
+﻿using BagetShop.DAO;
+using BagetShop.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace BagetShop.Service
     public interface IOrderServ
     {
         bool isEnough(Order order);
+
+        IUnitOfWork GetUOW();
     }
 }
