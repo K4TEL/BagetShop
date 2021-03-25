@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WpfBaget;
 
 namespace BagetShop
 {
@@ -32,9 +31,7 @@ namespace BagetShop
             uow.GetBagetRep().AddBaget(order, baget2);
 
             Console.WriteLine(orderServ.isEnough(order));
-
-            MainWindow win = new MainWindow();
-            new App().Run(win);
+            Console.WriteLine(orderServ.isEnough(uow.GetOrderRep().GetAll()[0]));
         }
     }
 }

@@ -1,16 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BagetShop.Model
 {
-    public class Order
+    public class Order : INotifyPropertyChanged
     {
-        public Guid ID { get; set; }
-        public List<Baget> Bagets { get; set; }
-        public string Customer { get; set; }
+        private Guid ID_;
+        private List<Baget> Bagets_;
+        private string Customer_;
+        public Guid ID { get { return ID_; } set {
+                ID_ = value;
+            } }
+        public List<Baget> Bagets { get { return Bagets_; } set {
+                Bagets_ = value;
+                OnPropertyChanged("Bagets");
+            } }
+        public string Customer { get { return Customer_; } set {
+                Customer_ = value;
+                OnPropertyChanged("Customer");
+            } }
 
         public Order(List<Baget> bagets, string customer)
         {
@@ -20,6 +33,13 @@ namespace BagetShop.Model
         }
 
         public Order() { this.ID = Guid.NewGuid(); this.Bagets = new List<Baget>(); }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
 
         public override string ToString()
         {

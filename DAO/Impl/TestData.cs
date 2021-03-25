@@ -42,6 +42,16 @@ namespace BagetShop.DAO.Impl
                 else
                     uow.GetMaterialRep().AddMaterial(mat.Type, mat);
             }
+            Order o1 = new Order();
+            o1.Customer = "John";
+
+            uow.GetOrderRep().Insert(o1);
+
+            Baget b1 = new Baget(2, 0.25, 0.7, type2, o1);
+            Baget b2 = new Baget(1, 0.5, 0.5, type1, o1);
+
+            uow.GetBagetRep().AddBaget(o1, b1);
+            uow.GetBagetRep().AddBaget(o1, b2);
 
         }
     }
