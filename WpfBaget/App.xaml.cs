@@ -28,12 +28,16 @@ namespace WpfBaget
             kernel = new StandardKernel(serviceModule);
             kernel.Load(Assembly.GetExecutingAssembly());
 
-            kernel.Bind<BagetViewModel>().ToSelf();
-            kernel.Bind<OrderViewModel>().ToSelf();
-            kernel.Bind<ViewModelLocator>().ToSelf();
-            kernel.Bind<MainWindow>().ToSelf();
+            kernel.Bind<BagetViewModel>().ToSelf().InTransientScope();
+            kernel.Bind<OrderViewModel>().ToSelf().InTransientScope();
+            kernel.Bind<MainViewModel>().ToSelf().InTransientScope();
 
-            //kernel.Bind<MainViewModel>().
+            kernel.Bind<AppViewModel>().ToSelf().InTransientScope();
+
+            kernel.Bind<ViewModelLocator>().ToSelf().InTransientScope();
+
+            kernel.Bind<MainWindow>().ToSelf().InTransientScope();
+
             MainWindow main = new MainWindow();
             Current.MainWindow.Show();
         }

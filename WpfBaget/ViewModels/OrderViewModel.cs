@@ -84,43 +84,43 @@ namespace WpfBaget.ViewModels
             }
         }
 
-        private RelayCommand addBagetCommand;
-        //done
-        public RelayCommand AddBagetCommand
-        {
-            get
-            {
-                return addBagetCommand ??
-                    (addBagetCommand = new RelayCommand(obj =>
-                    {
-                        OrderModel order = obj as OrderModel;
+        //private RelayCommand addBagetCommand;
+        ////done
+        //public RelayCommand AddBagetCommand
+        //{
+        //    get
+        //    {
+        //        return addBagetCommand ??
+        //            (addBagetCommand = new RelayCommand(obj =>
+        //            {
+        //                OrderModel order = obj as OrderModel;
 
-                        //BagetViewModel = new BagetViewModel(
-                        //    this, new BagetModel { OrderID = order.ID }, false);
-                        SwitchView = 1;
+        //                BagetViewModel = new BagetViewModel(
+        //                    this, new BagetModel { OrderID = order.ID }, false);
+        //                SwitchView = 1;
 
-                    }, (obj) => SelectedOrder != null));
-            }
-        }
+        //            }, (obj) => SelectedOrder != null));
+        //    }
+        //}
 
-        private RelayCommand editBagetCommand;
-        //done
-        public RelayCommand EditBagetCommand
-        {
-            get
-            {
-                return editBagetCommand ??
-                    (editBagetCommand = new RelayCommand(obj =>
-                    {
-                        BagetModel baget = obj as BagetModel;
+        //private RelayCommand editBagetCommand;
+        ////done
+        //public RelayCommand EditBagetCommand
+        //{
+        //    get
+        //    {
+        //        return editBagetCommand ??
+        //            (editBagetCommand = new RelayCommand(obj =>
+        //            {
+        //                BagetModel baget = obj as BagetModel;
 
-                        //BagetViewModel = new BagetViewModel(
-                        //    this, baget, true);
-                        SwitchView = 1;
+        //                BagetViewModel = new BagetViewModel(
+        //                    this, baget, true);
+        //                SwitchView = 1;
 
-                    }, (obj) => SelectedBaget != null));
-            }
-        }
+        //            }, (obj) => SelectedBaget != null));
+        //    }
+        //}
 
         private RelayCommand delBagetCommand;
         //done
@@ -227,16 +227,16 @@ namespace WpfBaget.ViewModels
             SelectedOrder = null;
         }
 
-        private int switchView;
-        public int SwitchView
-        {
-            get { return switchView; }
-            set
-            {
-                switchView = value;
-                SelectedOrder = orderServ.Load(SelectedOrder.ID);
-                OnPropertyChanged("SwitchView");
-            }
-        }
+        //private int switchView;
+        //public int SwitchView
+        //{
+        //    get { return switchView; }
+        //    set
+        //    {
+        //        switchView = value;
+        //        SelectedOrder = orderServ.Load(SelectedOrder.ID);
+        //        OnPropertyChanged("SwitchView");
+        //    }
+        //}
     }
 }

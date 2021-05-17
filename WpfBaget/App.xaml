@@ -8,15 +8,22 @@
         <ResourceDictionary>
 
             <vm:ViewModelLocator x:Key="Locator"/>
-            
-            <DataTemplate x:Key="ViewOrder" DataType="{x:Type vm:OrderViewModel}">
+
+            <DataTemplate DataType="{x:Type vm:OrderViewModel}">
                 <v:OrderView/>
             </DataTemplate>
 
-            <DataTemplate x:Key="ViewBaget" DataType="{x:Type vm:BagetViewModel}">
-                <v:BagetView DataContext="{Binding BagetViewModel}"/>
+            <DataTemplate DataType="{x:Type vm:BagetViewModel}">
+                <v:BagetView/>
             </DataTemplate>
-                
+
+            <Style TargetType="Button">
+                <Setter Property="Width" Value="50"/>
+                <Setter Property="Height" Value="50"/>
+                <Setter Property="Margin" Value="10 0 10 0"/>
+                <Setter Property="Background" Value="Black"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

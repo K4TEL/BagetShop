@@ -6,9 +6,8 @@
              xmlns:local="clr-namespace:WpfBaget.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             Height="auto" Width="auto"
-             DataContext="{Binding Path=OrderViewModel, Source={StaticResource Locator}}">
-    
+             Height="auto" Width="auto">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="390*"></RowDefinition>
@@ -46,17 +45,15 @@
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0"
                     HorizontalAlignment="Left">
             <Button x:Name="butAddOrder" Content="+" FontSize="25" 
-                Width="50" Height="50" Command="{Binding AddOrderCommand}"
+                Command="{Binding AddOrderCommand}"
                 Grid.Row="2" Grid.Column="0"
-                HorizontalAlignment="Left" Margin="10 0 10 0"
-                Background="Black" Foreground="White"/>
+                HorizontalAlignment="Left"/>
 
             <Button x:Name="butDelOrder" Content="-" FontSize="25" 
-                Width="50" Height="50" Command="{Binding DelOrderCommand}"
+                Command="{Binding DelOrderCommand}"
                 CommandParameter="{Binding SelectedOrder}"
                 Grid.Row="2" Grid.Column="0"
-                HorizontalAlignment="Right" Margin="10 0 10 0"
-                Background="Black" Foreground="White"/>
+                HorizontalAlignment="Right"/>
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Grid.Column="2" Grid.Row="0">
@@ -98,39 +95,35 @@
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="2"
                     HorizontalAlignment="Left">
             <Button x:Name="butAddBaget" Content="+" FontSize="25" 
-                Width="50" Height="50" Command="{Binding AddBagetCommand}"
+                Command="{Binding AddBagetCommand}"
                     CommandParameter="{Binding SelectedOrder}"
-                HorizontalAlignment="Left" Margin="10 0 10 0"
-                Background="Black" Foreground="White"/>
+                HorizontalAlignment="Left"/>
 
             <Button x:Name="butDelBaget" Content="-" FontSize="25" 
-                Width="50" Height="50" Command="{Binding DelBagetCommand}"
+               Command="{Binding DelBagetCommand}"
                     CommandParameter="{Binding SelectedBaget}"
-                HorizontalAlignment="Left" Margin="10 0 10 0"
-                Background="Black" Foreground="White"/>
+                HorizontalAlignment="Left"/>
 
-            <Button x:Name="butEditBaget" Content="Edit" FontSize="20" Padding="10 0 10 0"
-                Width="auto" Height="50" Command="{Binding EditBagetCommand}"
+            <Button x:Name="butEditBaget" Content="Edit" FontSize="20" 
+                    Padding="10 0 10 0" Width="auto"
+                Command="{Binding EditBagetCommand}"
                     CommandParameter="{Binding SelectedBaget}"
-                HorizontalAlignment="Left" Margin="10 0 10 0"
-                Background="Black" Foreground="White"/>
+                HorizontalAlignment="Left"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="2"
                     HorizontalAlignment="Right">
             <Button x:Name="butOrderSave" Content="Save" FontSize="20" 
-                Width="auto" Height="50" Padding="10 0 10 0" 
+                Width="auto" Padding="10 0 10 0" 
                     Command="{Binding SaveOrderCommand}"
                     CommandParameter="{Binding SelectedOrder}"
-                HorizontalAlignment="Center" Margin="10 0 10 0"
-                Background="Black" Foreground="White"/>
+                HorizontalAlignment="Center"/>
 
             <Button x:Name="butOrderCalc" Content="Calculate" FontSize="20" 
-                Width="auto" Height="50" Padding="10 0 10 0" 
+                Width="auto" Padding="10 0 10 0" 
                     Command="{Binding CalculateCommand}"
                     CommandParameter="{Binding SelectedOrder}"
-                HorizontalAlignment="Center" Margin="10 0 10 0"
-                Background="Black" Foreground="White"/>
+                HorizontalAlignment="Center"/>
         </StackPanel>
     </Grid>
 </UserControl>

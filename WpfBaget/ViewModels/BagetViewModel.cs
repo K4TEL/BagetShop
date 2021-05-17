@@ -1,5 +1,6 @@
 ﻿using BLL.Interfaces;
 using Models;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,10 +12,9 @@ namespace WpfBaget.ViewModels
     public class BagetViewModel : ViewModelBase
     {
         private IBagetServ bagetServ;
-        private OrderViewModel parent;
 
         private BagetModel selectedBaget;
-        private bool edit;
+        public bool edit;
 
         private TypeModel selectedType;
 
@@ -29,9 +29,6 @@ namespace WpfBaget.ViewModels
                         BagetModel baget = obj as BagetModel;
                         baget.TypeID = SelectedType.ID;
                         SelectedBaget = bagetServ.Save(baget, !edit);
-
-                        parent.SwitchView = 0;
-
                     }, (obj) => SelectedBaget != null));
             }
         }
@@ -46,8 +43,6 @@ namespace WpfBaget.ViewModels
                     {
                         SelectedBaget = null;
                         SelectedType = null;
-
-                        parent.SwitchView = 0;
                     }));
             }
         }
@@ -91,15 +86,34 @@ namespace WpfBaget.ViewModels
             }
         }
 
-        public BagetViewModel(
-            ITypeServ typeServ, IBagetServ bagetServ,
-            OrderViewModel parent,
-            BagetModel baget,
-            bool edit)
+        //public BagetViewModel(IKernel kernel, ITypeServ typeServ, IBagetServ bagetServ)
+        //{
+        //    SelectedBaget = kernel.Get<MainViewModel>().SelectedBaget;
+        //    this.edit = kernel.Get<MainViewModel>().edit;
+
+        //    Types = typeServ.LoadAll();
+        //    this.bagetServ = bagetServ;
+
+        //    if (!edit)
+        //    {
+        //        SelectedBaget.Amount = "1";
+        //        SelectedBaget.Width = "0,1";
+        //        SelectedBaget.Lenght = "0,1";
+
+        //        SelectedType = Types[0];
+        //    }
+        //    else
+        //    {
+        //        SelectedType = bagetServ.LoadType(SelectedBaget.ID);
+        //    }
+        //}
+
+        public BagetViewModel(IKernel kernel, ITypeServ typeServ, IBagetServ bagetServ,
+            BagetModel baget, bool edit)
         {
             SelectedBaget = baget;
             this.edit = edit;
-            this.parent = parent;
+
             Types = typeServ.LoadAll();
             this.bagetServ = bagetServ;
 
@@ -113,9 +127,10 @@ namespace WpfBaget.ViewModels
             }
             else
             {
-                SelectedType = bagetServ.LoadType(baget.ID);
+                SelectedType = bagetServ.LoadType(SelectedBaget.ID);
             }
         }
+
         public string Amount
         {
             get { return SelectedBaget.Amount; }

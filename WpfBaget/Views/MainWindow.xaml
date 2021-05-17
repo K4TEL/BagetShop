@@ -11,12 +11,22 @@
         Background="Black"
         Foreground="White"
         FontSize="14"
-        DataContext="{Binding Path=OrderViewModel, Source={StaticResource Locator}}">
+        DataContext="{Binding Path=AppViewModel, 
+    Source={StaticResource Locator}}">
 
+    <Window.Resources>
+        <DataTemplate x:Key="ViewOrder">
+            <local:OrderView/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ViewBaget">
+            <local:BagetView/>
+        </DataTemplate>
+    </Window.Resources>
+    
     <Grid x:Name="grid">
-        <ContentControl Content="{Binding CurrentViewModel}"/>
-        
-        <!--<ContentControl Content="{Binding }">
+      
+        <ContentControl Content="{Binding }">
             <ContentControl.Style>
                 <Style TargetType="{x:Type ContentControl}">
                     <Setter Property="ContentTemplate" Value="{StaticResource ViewOrder}"/>
@@ -27,6 +37,6 @@
                     </Style.Triggers>
                 </Style>
             </ContentControl.Style>
-        </ContentControl>-->
+        </ContentControl>
     </Grid>
 </Window>
