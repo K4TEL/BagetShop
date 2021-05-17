@@ -1,0 +1,6 @@
+C:\Users\Admin\source\repos\BagetShop\Models\bin\Debug\Models.dll
+C:\Users\Admin\source\repos\BagetShop\Models\bin\Debug\Models.pdb
+C:\Users\Admin\source\repos\BagetShop\Models\obj\Debug\Models.csprojAssemblyReference.cache
+C:\Users\Admin\source\repos\BagetShop\Models\obj\Debug\Models.csproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\BagetShop\Models\obj\Debug\Models.dll
+C:\Users\Admin\source\repos\BagetShop\Models\obj\Debug\Models.pdb

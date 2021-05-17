@@ -1,5 +1,5 @@
-﻿using BLL.DTO;
-using DAL.Entities;
+﻿using Entities;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.Mappers
+namespace Mappers
 {
-    static class TypeMapper
+    public static class TypeMapper
     {
         public static TypeModel MapToModel(this BagType entity)
         {
@@ -18,8 +18,8 @@ namespace BLL.Mappers
                 ID = entity.ID,
                 Title = entity.Title,
 
-                Materials = !(entity.Materials is null) ? 
-                MaterialMapper.MapToModelList(entity.Materials) : 
+                Materials = !(entity.Materials is null) ?
+                entity.Materials.MapToModelList() : 
                 new ObservableCollection<MaterialModel>()
             };
         }

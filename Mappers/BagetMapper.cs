@@ -1,5 +1,5 @@
-﻿using BLL.DTO;
-using DAL.Entities;
+﻿using Entities;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Mappers
 {
-    static class BagetMapper
+    public static class BagetMapper
     {
         public static BagetModel MapToModel(this Baget entity)
         {
@@ -33,6 +33,19 @@ namespace Mappers
             entity.Width = Double.Parse(model.Width);
             entity.Order_ID = model.OrderID;
             entity.Type_ID = model.TypeID;
+        }
+
+        public static Baget NewBagetEntity(this BagetModel model)
+        {
+            return new Baget
+            {
+                ID = Guid.NewGuid(),
+                Amount = int.Parse(model.Amount),
+                Lenght = Double.Parse(model.Lenght),
+                Width = Double.Parse(model.Width),
+                Order_ID = model.OrderID,
+                Type_ID = model.TypeID
+            };
         }
         public static ObservableCollection<BagetModel> MapToModelList(
             this IEnumerable<Baget> entities)

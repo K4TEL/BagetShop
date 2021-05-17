@@ -1,5 +1,5 @@
-﻿using BLL.DTO;
-using DAL.Entities;
+﻿using Entities;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.Mappers
+namespace Mappers
 {
-    static class OrderMapper
+    public static class OrderMapper
     {
         public static OrderModel MapToModel(this Order entity)
         {
@@ -19,9 +19,19 @@ namespace BLL.Mappers
                 Customer = entity.Customer,
 
                 Bagets = !(entity.Bagets is null) ?
-                BagetMapper.MapToModelList(entity.Bagets) : 
+                entity.Bagets.MapToModelList() : 
                 new ObservableCollection<BagetModel>()
             };
+        }
+
+        public static void UpdateOrderCustomer(this Order entity, OrderModel model)
+        {
+            entity.Customer = model.Customer;
+        }
+
+        public static Order NewOrderEntity(this OrderModel model)
+        {
+            return new Order(model.Customer);
         }
 
         public static ObservableCollection<OrderModel> MapToModelList(

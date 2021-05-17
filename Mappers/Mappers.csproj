@@ -48,13 +48,13 @@
     <Compile Include="TypeMapper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BLL\BLL.csproj">
-      <Project>{fd480bce-4081-4ab1-9b9b-0962e8479283}</Project>
-      <Name>BLL</Name>
+    <ProjectReference Include="..\Entities\Entities.csproj">
+      <Project>{b17fb1a1-e529-4198-8f83-30df59c686f7}</Project>
+      <Name>Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\DAL\DAL.csproj">
-      <Project>{11643746-fa3e-4f9f-a073-88edd1aca36c}</Project>
-      <Name>DAL</Name>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{ef83dfd9-343d-4f1c-9a72-9171b7ea1e98}</Project>
+      <Name>Models</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

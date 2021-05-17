@@ -1,5 +1,5 @@
-﻿using BLL.DTO;
-using DAL.Entities;
+﻿using Entities;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.Mappers
+namespace Mappers
 {
-    static class MaterialMapper
+    public static class MaterialMapper
     {
         public static MaterialModel MapToModel(this Material entity)
         {
