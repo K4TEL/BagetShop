@@ -1,8 +1,22 @@
 ﻿<Application x:Class="WpfBaget.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:WpfBaget">
+             xmlns:local="clr-namespace:WpfBaget"
+             xmlns:v="clr-namespace:WpfBaget.Views"
+             xmlns:vm="clr-namespace:WpfBaget.ViewModels">
     <Application.Resources>
-         
+        <ResourceDictionary>
+
+            <vm:ViewModelLocator x:Key="Locator"/>
+            
+            <DataTemplate x:Key="ViewOrder" DataType="{x:Type vm:OrderViewModel}">
+                <v:OrderView/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ViewBaget" DataType="{x:Type vm:BagetViewModel}">
+                <v:BagetView DataContext="{Binding BagetViewModel}"/>
+            </DataTemplate>
+                
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

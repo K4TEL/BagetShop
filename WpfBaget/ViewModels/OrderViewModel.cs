@@ -1,5 +1,5 @@
-﻿using BLL.DTO;
-using BLL.Interfaces;
+﻿using BLL.Interfaces;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,8 +11,6 @@ namespace WpfBaget.ViewModels
 {
     public class OrderViewModel : ViewModelBase
     {
-        public IService services { get; set; }
-
         private IOrderServ orderServ;
 
         private OrderModel selectedOrder;
@@ -97,8 +95,8 @@ namespace WpfBaget.ViewModels
                     {
                         OrderModel order = obj as OrderModel;
 
-                        BagetViewModel = new BagetViewModel(
-                            this, new BagetModel { OrderID = order.ID }, false);
+                        //BagetViewModel = new BagetViewModel(
+                        //    this, new BagetModel { OrderID = order.ID }, false);
                         SwitchView = 1;
 
                     }, (obj) => SelectedOrder != null));
@@ -116,8 +114,8 @@ namespace WpfBaget.ViewModels
                     {
                         BagetModel baget = obj as BagetModel;
 
-                        BagetViewModel = new BagetViewModel(
-                            this, baget, true);
+                        //BagetViewModel = new BagetViewModel(
+                        //    this, baget, true);
                         SwitchView = 1;
 
                     }, (obj) => SelectedBaget != null));
@@ -220,10 +218,9 @@ namespace WpfBaget.ViewModels
             }
         }
 
-        public OrderViewModel(IService services)
+        public OrderViewModel(IOrderServ orderServ)
         {
-            this.services = services;
-            orderServ = services.GetService<IOrderServ>();
+            this.orderServ = orderServ;
             
             Orders = orderServ.LoadAll();
 

@@ -4,6 +4,34 @@
     "C:\\Users\\Admin\\source\\repos\\BagetShop\\WpfBaget\\WpfBaget.csproj": {}
   },
   "projects": {
+    "C:\\Users\\Admin\\source\\repos\\BagetShop\\BLL\\BLL.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\BagetShop\\BLL\\BLL.csproj",
+        "projectName": "BLL",
+        "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\BLL\\BLL.csproj",
+        "frameworks": {
+          "net472": {
+            "projectReferences": {
+              "C:\\Users\\Admin\\source\\repos\\BagetShop\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\DAL\\DAL.csproj"
+              },
+              "C:\\Users\\Admin\\source\\repos\\BagetShop\\Entities\\Entities.csproj": {
+                "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\Entities\\Entities.csproj"
+              },
+              "C:\\Users\\Admin\\source\\repos\\BagetShop\\Mappers\\Mappers.csproj": {
+                "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\Mappers\\Mappers.csproj"
+              },
+              "C:\\Users\\Admin\\source\\repos\\BagetShop\\Models\\Models.csproj": {
+                "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\Models\\Models.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    },
     "C:\\Users\\Admin\\source\\repos\\BagetShop\\DAL\\DAL.csproj": {
       "restore": {
         "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\BagetShop\\DAL\\DAL.csproj",
@@ -89,11 +117,11 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
+              "C:\\Users\\Admin\\source\\repos\\BagetShop\\BLL\\BLL.csproj": {
+                "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\BLL\\BLL.csproj"
+              },
               "C:\\Users\\Admin\\source\\repos\\BagetShop\\Models\\Models.csproj": {
                 "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\Models\\Models.csproj"
-              },
-              "C:\\Users\\Admin\\source\\repos\\BLL\\BLL.csproj": {
-                "projectPath": "C:\\Users\\Admin\\source\\repos\\BLL\\BLL.csproj"
               }
             }
           }
@@ -137,34 +165,6 @@
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
         }
-      }
-    },
-    "C:\\Users\\Admin\\source\\repos\\BLL\\BLL.csproj": {
-      "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\BLL\\BLL.csproj",
-        "projectName": "BLL",
-        "projectPath": "C:\\Users\\Admin\\source\\repos\\BLL\\BLL.csproj",
-        "frameworks": {
-          "net472": {
-            "projectReferences": {
-              "C:\\Users\\Admin\\source\\repos\\BagetShop\\DAL\\DAL.csproj": {
-                "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\DAL\\DAL.csproj"
-              },
-              "C:\\Users\\Admin\\source\\repos\\BagetShop\\Entities\\Entities.csproj": {
-                "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\Entities\\Entities.csproj"
-              },
-              "C:\\Users\\Admin\\source\\repos\\BagetShop\\Mappers\\Mappers.csproj": {
-                "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\Mappers\\Mappers.csproj"
-              },
-              "C:\\Users\\Admin\\source\\repos\\BagetShop\\Models\\Models.csproj": {
-                "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\Models\\Models.csproj"
-              }
-            }
-          }
-        }
-      },
-      "frameworks": {
-        "net472": {}
       }
     }
   }

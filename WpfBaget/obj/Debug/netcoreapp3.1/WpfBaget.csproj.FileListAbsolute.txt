@@ -74,3 +74,12 @@ C:\Users\Admin\source\repos\BagetShop\WpfBaget\obj\Debug\netcoreapp3.1\WpfBaget.
 C:\Users\Admin\source\repos\BagetShop\WpfBaget\obj\Debug\netcoreapp3.1\WpfBaget.dll
 C:\Users\Admin\source\repos\BagetShop\WpfBaget\obj\Debug\netcoreapp3.1\WpfBaget.pdb
 C:\Users\Admin\source\repos\BagetShop\WpfBaget\obj\Debug\netcoreapp3.1\WpfBaget.genruntimeconfig.cache
+C:\Users\Admin\source\repos\BagetShop\WpfBaget\bin\Debug\netcoreapp3.1\Ninject.dll
+C:\Users\Admin\source\repos\BagetShop\WpfBaget\bin\Debug\netcoreapp3.1\Entities.dll
+C:\Users\Admin\source\repos\BagetShop\WpfBaget\bin\Debug\netcoreapp3.1\Mappers.dll
+C:\Users\Admin\source\repos\BagetShop\WpfBaget\bin\Debug\netcoreapp3.1\Models.dll
+C:\Users\Admin\source\repos\BagetShop\WpfBaget\bin\Debug\netcoreapp3.1\BLL.dll.config
+C:\Users\Admin\source\repos\BagetShop\WpfBaget\bin\Debug\netcoreapp3.1\Models.pdb
+C:\Users\Admin\source\repos\BagetShop\WpfBaget\bin\Debug\netcoreapp3.1\Entities.pdb
+C:\Users\Admin\source\repos\BagetShop\WpfBaget\bin\Debug\netcoreapp3.1\Mappers.pdb
+C:\Users\Admin\source\repos\BagetShop\WpfBaget\obj\Debug\netcoreapp3.1\App.baml

@@ -10,17 +10,8 @@
         Height="450" Width="900"
         Background="Black"
         Foreground="White"
-        FontSize="14">
-
-    <Window.Resources>
-        <DataTemplate x:Key="ViewOrder" DataType="{x:Type vm:OrderViewModel}">
-            <local:OrderView/>
-        </DataTemplate>
-
-        <DataTemplate x:Key="ViewBaget" DataType="{x:Type vm:BagetViewModel}">
-            <local:BagetView DataContext="{Binding BagetViewModel}"/>
-        </DataTemplate>
-    </Window.Resources>
+        FontSize="14"
+        DataContext="{Binding Path=OrderViewModel, Source={StaticResource Locator}}">
 
     <Grid x:Name="grid">
         <ContentControl Content="{Binding }">

@@ -1765,8 +1765,8 @@
     },
     "BLL/1.0.0": {
       "type": "project",
-      "path": "../../BLL/BLL.csproj",
-      "msbuildProject": "../../BLL/BLL.csproj"
+      "path": "../BLL/BLL.csproj",
+      "msbuildProject": "../BLL/BLL.csproj"
     },
     "DAL/1.0.0": {
       "type": "project",
@@ -1824,11 +1824,11 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
+            "C:\\Users\\Admin\\source\\repos\\BagetShop\\BLL\\BLL.csproj": {
+              "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\BLL\\BLL.csproj"
+            },
             "C:\\Users\\Admin\\source\\repos\\BagetShop\\Models\\Models.csproj": {
               "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\Models\\Models.csproj"
-            },
-            "C:\\Users\\Admin\\source\\repos\\BLL\\BLL.csproj": {
-              "projectPath": "C:\\Users\\Admin\\source\\repos\\BLL\\BLL.csproj"
             }
           }
         }
