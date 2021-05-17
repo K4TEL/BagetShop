@@ -10,19 +10,16 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public class Order
+    public class Order : BaseEntity<Guid>
     {
-        [Key]
-        public Guid ID { get; set; }
         public List<Baget> Bagets { get; set; }
-        [Required]
         public string Customer { get; set; }
 
         private Order() { }
 
         public Order(string customer)
         {
-            this.ID = Guid.NewGuid();
+            ID = Guid.NewGuid();
             this.Customer = customer;
             this.Bagets = new List<Baget>();
         }

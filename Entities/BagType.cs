@@ -10,11 +10,8 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public class BagType
+    public class BagType : BaseEntity<Guid>
     {
-        [Key]
-        public Guid ID { get; set; }
-        [Required]
         public string Title { get; set; }
         public List<Material> Materials { get; set; }
         public virtual List<Baget> Bagets { get; set; }
@@ -22,7 +19,7 @@ namespace Entities
         private BagType() { }
         public BagType(string title)
         {
-            this.ID = Guid.NewGuid();
+            ID = Guid.NewGuid();
             this.Title = title;
             this.Materials = new List<Material>();
             this.Bagets = new List<Baget>();

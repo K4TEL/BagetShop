@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Baget.cs" />
     <Compile Include="BagType.cs" />
+    <Compile Include="BaseEntity.cs" />
     <Compile Include="Material.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

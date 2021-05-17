@@ -4,6 +4,25 @@
     "C:\\Users\\Admin\\source\\repos\\BagetShop\\WpfBaget\\WpfBaget.csproj": {}
   },
   "projects": {
+    "C:\\Users\\Admin\\source\\repos\\BagetShop\\DAL\\DAL.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\BagetShop\\DAL\\DAL.csproj",
+        "projectName": "DAL",
+        "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\DAL\\DAL.csproj",
+        "frameworks": {
+          "net472": {
+            "projectReferences": {
+              "C:\\Users\\Admin\\source\\repos\\BagetShop\\Entities\\Entities.csproj": {
+                "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\Entities\\Entities.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    },
     "C:\\Users\\Admin\\source\\repos\\BagetShop\\Entities\\Entities.csproj": {
       "restore": {
         "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\BagetShop\\Entities\\Entities.csproj",
@@ -92,6 +111,10 @@
             "EntityFramework": {
               "target": "Package",
               "version": "[6.4.4, )"
+            },
+            "Ninject": {
+              "target": "Package",
+              "version": "[3.3.4, )"
             }
           },
           "imports": [
@@ -124,6 +147,9 @@
         "frameworks": {
           "net472": {
             "projectReferences": {
+              "C:\\Users\\Admin\\source\\repos\\BagetShop\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\DAL\\DAL.csproj"
+              },
               "C:\\Users\\Admin\\source\\repos\\BagetShop\\Entities\\Entities.csproj": {
                 "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\Entities\\Entities.csproj"
               },
@@ -132,28 +158,6 @@
               },
               "C:\\Users\\Admin\\source\\repos\\BagetShop\\Models\\Models.csproj": {
                 "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\Models\\Models.csproj"
-              },
-              "C:\\Users\\Admin\\source\\repos\\DAL\\DAL.csproj": {
-                "projectPath": "C:\\Users\\Admin\\source\\repos\\DAL\\DAL.csproj"
-              }
-            }
-          }
-        }
-      },
-      "frameworks": {
-        "net472": {}
-      }
-    },
-    "C:\\Users\\Admin\\source\\repos\\DAL\\DAL.csproj": {
-      "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\DAL\\DAL.csproj",
-        "projectName": "DAL",
-        "projectPath": "C:\\Users\\Admin\\source\\repos\\DAL\\DAL.csproj",
-        "frameworks": {
-          "net472": {
-            "projectReferences": {
-              "C:\\Users\\Admin\\source\\repos\\BagetShop\\Entities\\Entities.csproj": {
-                "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\Entities\\Entities.csproj"
               }
             }
           }

@@ -9,17 +9,11 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public class Material
+    public class Material : BaseEntity<Guid>
     {
-        [Key]
-        public Guid ID { get; set; }
-        [Required]
         public double Amount { get; set; }
-        [Required]
         public string Name { get; set; }
-        [Required]
         public bool Storage { get; set; }
-        [Required]
         public Units Unit { get; set; }
         public Guid Type_ID { get; set; }
         public BagType Type { get; set; }
@@ -27,7 +21,7 @@ namespace Entities
         private Material() { }
         public Material(string name, double amo, Units unit, bool storage)
         {
-            this.ID = Guid.NewGuid();
+            ID = Guid.NewGuid();
             this.Name = name;
             this.Amount = amo;
             this.Unit = unit;
@@ -36,7 +30,7 @@ namespace Entities
 
         public Material(string name, double amo, BagType type)
         {
-            this.ID = Guid.NewGuid();
+            ID = Guid.NewGuid();
             this.Name = name;
             this.Amount = amo;
             this.Type = type;
@@ -45,7 +39,7 @@ namespace Entities
 
         public Material(string name, double amo, Guid typeID)
         {
-            this.ID = Guid.NewGuid();
+            ID = Guid.NewGuid();
             this.Name = name;
             this.Amount = amo;
             this.Type_ID = typeID;

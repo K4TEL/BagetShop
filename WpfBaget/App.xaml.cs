@@ -1,9 +1,12 @@
 ﻿using BLL.Infrastructure;
+using Ninject;
+using Ninject.Modules;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using WpfBaget.ViewModels;
@@ -20,10 +23,14 @@ namespace WpfBaget
         {
             base.OnStartup(e);
 
-            Current.MainWindow = new MainWindow
-            {
-                DataContext = new OrderViewModel(new ServiceLocator("DefaultConnection"))
-            };
+            NinjectModule serviceModule = new ServiceModule("DefaultConnection");
+            StandardKernel kernel = new StandardKernel(serviceModule);
+            kernel.Load(Assembly.GetExecutingAssembly());
+
+            kernel.Bind<MainWindow>().ToSelf();
+            
+            //kernel.Bind<MainViewModel>().
+
             Current.MainWindow.Show();
         }
     }
