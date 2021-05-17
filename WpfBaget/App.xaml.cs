@@ -19,18 +19,22 @@ namespace WpfBaget
     /// </summary>
     public partial class App : Application
     {
+        public static IKernel kernel { get; set; }
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
             NinjectModule serviceModule = new ServiceModule("DefaultConnection");
-            StandardKernel kernel = new StandardKernel(serviceModule);
+            kernel = new StandardKernel(serviceModule);
             kernel.Load(Assembly.GetExecutingAssembly());
 
+            kernel.Bind<BagetViewModel>().ToSelf();
+            kernel.Bind<OrderViewModel>().ToSelf();
+            kernel.Bind<ViewModelLocator>().ToSelf();
             kernel.Bind<MainWindow>().ToSelf();
-            
-            //kernel.Bind<MainViewModel>().
 
+            //kernel.Bind<MainViewModel>().
+            MainWindow main = new MainWindow();
             Current.MainWindow.Show();
         }
     }

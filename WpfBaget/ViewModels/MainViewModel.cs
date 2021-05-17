@@ -1,5 +1,6 @@
 ﻿using BLL.Interfaces;
 using Models;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -329,16 +330,27 @@ namespace WpfBaget.ViewModels
             }
         }
 
-        public MainViewModel(IService services)
+        public MainViewModel(IKernel kernel)
         {
-            orderServ = services.GetService<IOrderServ>();
-            bagetServ = services.GetService<IBagetServ>();
-            typeServ = services.GetService<ITypeServ>();
+            orderServ = kernel.Get<IOrderServ>();
+            bagetServ = kernel.Get<IBagetServ>();
+            typeServ = kernel.Get<ITypeServ>();
 
             Orders = orderServ.LoadAll();
             Types = typeServ.LoadAll();
 
             SelectedOrder = null;
+
+            CurrentViewModel = ViewModelLocator.OrderViewModel;
+        }
+        private ViewModelBase currentVM;
+        public ViewModelBase CurrentViewModel 
+        { 
+            get { return currentVM; } set
+            {
+                currentVM = value;
+                OnPropertyChanged("CurrentViewModel");
+            } 
         }
     }
 }

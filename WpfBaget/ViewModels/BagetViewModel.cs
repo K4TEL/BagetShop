@@ -1,5 +1,5 @@
-﻿using BLL.DTO;
-using BLL.Interfaces;
+﻿using BLL.Interfaces;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -92,6 +92,7 @@ namespace WpfBaget.ViewModels
         }
 
         public BagetViewModel(
+            ITypeServ typeServ, IBagetServ bagetServ,
             OrderViewModel parent,
             BagetModel baget,
             bool edit)
@@ -99,8 +100,8 @@ namespace WpfBaget.ViewModels
             SelectedBaget = baget;
             this.edit = edit;
             this.parent = parent;
-            Types = parent.services.GetService<ITypeServ>().LoadAll();
-            bagetServ = parent.services.GetService<IBagetServ>();
+            Types = typeServ.LoadAll();
+            this.bagetServ = bagetServ;
 
             if (!edit)
             {

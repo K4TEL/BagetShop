@@ -6,7 +6,9 @@
              xmlns:local="clr-namespace:WpfBaget.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             Height="auto" Width="auto">
+             Height="auto" Width="auto"
+             DataContext="{Binding Path=BagetViewModel, Source={StaticResource Locator}}">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="390*"></RowDefinition>
