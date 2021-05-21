@@ -39,6 +39,6 @@ namespace Entities
             this.Amount = amo;
         }
 
-        public Baget() { }
+        public Baget() { ID = Guid.NewGuid(); }
     }
 }

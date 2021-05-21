@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Models;
 using Mappers;
+using Mappers.Util;
 
 namespace BLL.Services
 {
@@ -27,15 +28,15 @@ namespace BLL.Services
 
         public TypeModel Load(Guid id)
         {
-            if (id == null)
-                throw new ValidationException("No type id", "");
-
-            BagType type = database.TypeRep.Load(id);
-
-            if (type == null)
-                throw new ValidationException("No type with such id", "");
-
-            return type.MapToModel();
+            try
+            {
+                BagType type = database.TypeRep.Load(id);
+                return type.MapToModel();
+            }
+            catch (ValidationException e)
+            {
+                throw new MapperException(e.Message + " with ID " + id, e);
+            }
         }
     }
 }

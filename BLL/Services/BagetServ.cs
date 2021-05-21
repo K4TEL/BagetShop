@@ -10,7 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Models;
 using Mappers;
-
+using System.Data.Entity.Infrastructure;
+using Mappers.Util;
 
 namespace BLL.Services
 {
@@ -28,39 +29,85 @@ namespace BLL.Services
 
         public BagetModel Load(Guid id)
         {
-            return database.BagetRep.Load(Read(id).ID).MapToModel();
+            try
+            {
+                return database.BagetRep.Load(id).MapToModel();
+            }
+            catch (ValidationException e)
+            {
+                throw new MapperException(e.Message + " with ID " + id, e);
+            }
         }
 
         public BagetModel Save(BagetModel bagetDTO, bool isNew)
         {
-            if (isNew)
+            try
             {
-                if (bagetDTO == null)
-                    throw new ValidationException("No baget model", "");
-
-                Baget baget = bagetDTO.NewBagetEntity();
-
-                database.BagetRep.Create(baget);
-                return Load(baget.ID);
-            }
-            else
+                if (isNew)
+                {
+                    Baget baget = bagetDTO.NewBagetEntity();
+                    database.BagetRep.Create(baget);
+                    return Load(baget.ID);
+                }
+                else
+                {
+                    Baget baget = Read(bagetDTO);
+                    baget.UpdateBagetEntity(bagetDTO);
+                    database.BagetRep.Update(baget);
+                    return Load(baget.ID);
+                }
+            } 
+            catch (DbUpdateException e)
             {
-                Baget baget = Read(bagetDTO);
-                baget.UpdateBagetEntity(bagetDTO);
+                string action = "update";
+                if (isNew)
+                    action = "create";
+                throw new DALException("BagetModel is incorrect! Unable to " + action + " Baget", e);
+            } 
+            catch (ValidationException e)
+            {
+                if (e.isNull)
+                    throw new MapperException(e.Message + " in BagetModel to Save", e);
 
-                database.BagetRep.Update(baget);
-                return Load(baget.ID);
+                throw new MapperException(e.Message + " " + e.Property + " in BagetModel " + bagetDTO, e);
             }
         }
 
         public void Del(BagetModel bagetDTO)
         {
-            database.BagetRep.Delete(Read(bagetDTO));
+            try
+            {
+                database.BagetRep.Delete(Read(bagetDTO));
+            }
+            catch (DbUpdateException e)
+            {
+                throw new DALException("BagetModel is incorrect! Unable to delete Baget " + bagetDTO, e);
+            }
         }
 
         public TypeModel LoadType(Guid id)
         {
-            return database.BagetRep.LoadType(Read(id).ID).MapToModel();
+            try
+            {
+                return database.BagetRep.LoadType(id).MapToModel();
+            }
+            catch (ValidationException e)
+            {
+                throw new MapperException(e.Message + " with ID " + id, e);
+            }
+        }
+
+        private Baget Read(BagetModel model)
+        {
+            if (model == null)
+                throw new ReadModelException("Empty BagetModel");
+            Guid id = model.ID;
+            if (id == null)
+                throw new ReadModelException("Empty ID of BagetModel " + model);
+            Baget baget = database.BagetRep.GetByID(id);
+            if (baget == null)
+                throw new ReadModelException("No Baget with such ID " + id);
+            return baget;
         }
 
         //public OrderModel LoadOrder(Guid id)
@@ -72,36 +119,24 @@ namespace BLL.Services
         //    return BagetMapper.MapToModelList(database.BagetRep.GetAll());
         //}
 
-        private Baget Read(BagetModel model)
-        {
-            if (model == null)
-                throw new ValidationException("No baget model", "");
-            Guid id = model.ID;
-            if (id == null)
-                throw new ValidationException("No baget id", "");
-            Baget baget = database.BagetRep.GetByID(id);
-            if (baget == null)
-                throw new ValidationException("No baget with such id", "");
-            return baget;
-        }
-        private Baget Read(Guid id)
-        {
-            if (id == null)
-                throw new ValidationException("No baget id", "");
-            Baget baget = database.BagetRep.GetByID(id);
-            if (baget == null)
-                throw new ValidationException("No baget with such id", "");
-            return baget;
-        }
+        //private Baget Read(Guid id)
+        //{
+        //    if (id == null)
+        //        throw new CustomException("No baget id", "");
+        //    Baget baget = database.BagetRep.GetByID(id);
+        //    if (baget == null)
+        //        throw new CustomException("No baget with such id", "");
+        //    return baget;
+        //}
 
-        private Order ReadOrder(Guid id)
-        {
-            if (id == null)
-                throw new ValidationException("No order id", "");
-            Order order = database.OrderRep.GetByID(id);
-            if (order == null)
-                throw new ValidationException("No order with such id", "");
-            return order;
-        }
+        //private Order ReadOrder(Guid id)
+        //{
+        //    if (id == null)
+        //        throw new CustomException("No order id", "");
+        //    Order order = database.OrderRep.GetByID(id);
+        //    if (order == null)
+        //        throw new CustomException("No order with such id", "");
+        //    return order;
+        //}
     }
 }

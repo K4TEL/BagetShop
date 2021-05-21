@@ -1,0 +1,11 @@
+C:\Users\Admin\source\repos\BagetShop\Mappers\bin\Release\Mappers.dll
+C:\Users\Admin\source\repos\BagetShop\Mappers\bin\Release\Mappers.pdb
+C:\Users\Admin\source\repos\BagetShop\Mappers\bin\Release\Entities.dll
+C:\Users\Admin\source\repos\BagetShop\Mappers\bin\Release\Models.dll
+C:\Users\Admin\source\repos\BagetShop\Mappers\bin\Release\Entities.pdb
+C:\Users\Admin\source\repos\BagetShop\Mappers\bin\Release\Models.pdb
+C:\Users\Admin\source\repos\BagetShop\Mappers\obj\Release\Mappers.csprojAssemblyReference.cache
+C:\Users\Admin\source\repos\BagetShop\Mappers\obj\Release\Mappers.csproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\BagetShop\Mappers\obj\Release\Mappers.csproj.CopyComplete
+C:\Users\Admin\source\repos\BagetShop\Mappers\obj\Release\Mappers.dll
+C:\Users\Admin\source\repos\BagetShop\Mappers\obj\Release\Mappers.pdb

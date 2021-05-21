@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using Entities;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace BLL.Interfaces
 {
     public interface ICalcServ
     {
-        Boolean IsEnough(OrderModel orderDTO);
+        Boolean IsEnough(Order order);
         String showMaterials(OrderModel orderDTO);
     }
 }

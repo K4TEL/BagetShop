@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Mappers;
 using Models;
+using System.Data.Entity.Infrastructure;
+using Mappers.Util;
 
 namespace BLL.Services
 {
@@ -29,15 +31,21 @@ namespace BLL.Services
 
         public OrderModel Load(Guid id)
         {
-            return database.OrderRep.Load(Read(id).ID).MapToModel();
+            try
+            {
+                return database.OrderRep.Load(id).MapToModel();
+            }
+            catch (ValidationException e)
+            {
+                throw new MapperException(e.Message + " with ID " + id, e);
+            }
         }
 
         public OrderModel Save(OrderModel orderDTO, bool isNew)
         {
+            try { 
             if (isNew)
             {
-                if (orderDTO == null)
-                    throw new ValidationException("No order model", "");
                 Order order = orderDTO.NewOrderEntity();
                 database.OrderRep.Create(order);
                 return Load(order.ID);
@@ -49,41 +57,75 @@ namespace BLL.Services
                 database.OrderRep.Update(order);
                 return Load(order.ID);
             }
+            }
+            catch (DbUpdateException e)
+            {
+                string action = "update";
+                if (isNew)
+                    action = "create";
+
+                throw new DALException("OrderModel is incorrect! Unable to " + action + " Order " + orderDTO, e);
+            }
+            catch (ValidationException e)
+            {
+                if (e.isNull)
+                    throw new MapperException(e.Message + " in OrderModel to Save", e);
+
+                throw new MapperException(e.Message + " " + e.Property + " in OrderModel " + orderDTO, e);
+            }
         }
 
         public void Del(OrderModel orderDTO)
         {
-            database.OrderRep.Delete(Read(orderDTO));
+            try
+            {
+                database.OrderRep.Delete(Read(orderDTO));
+            } 
+            catch (DbUpdateException e)
+            {
+                throw new DALException("OrderModel is incorrect! Unable to delete Order " + orderDTO, e);
+            }
         }
 
         public OrderModel AddBaget(OrderModel orderDTO, BagetModel bagetDTO)
         {
-            if (bagetDTO == null)
-                throw new ValidationException("No baget model", "");
+            try
+            {
+                //BagType type = ReadType(bagetDTO.TypeID);
+                Baget baget = bagetDTO.NewBagetEntity();
+                database.BagetRep.Create(baget);
+                return Load(orderDTO.ID);
+            }
+            catch (DbUpdateException e)
+            {
+                throw new DALException("BagetModel is incorrect! Unable create Baget " + bagetDTO, e);
+            }
+            catch (ValidationException e)
+            {
+                if (e.isNull)
+                    throw new MapperException(e.Message + " in BagetModel to Save", e);
 
-            BagType type = ReadType(bagetDTO.TypeID);
-
-            Baget baget = bagetDTO.NewBagetEntity();
-
-            database.BagetRep.Create(baget);
-            return Load(Read(orderDTO).ID);
+                throw new MapperException(e.Message + " " + e.Property + " in BagetModel " + bagetDTO, e);
+            }
         }
 
-        public bool IsEnough(OrderModel orderDTO)
+        public bool IsEnough(Order order)
         {
             showMat = "";
             bool enough = true;
 
+
             foreach (Material mat in database.MatRep.Storage())
             {
                 double present = mat.Amount;
-                foreach (Baget baget in database.OrderRep.LoadBagets(Read(orderDTO).ID))
-                {
-                    foreach (Material needed in baget.Type.Materials)
-                        if (needed.Name == mat.Name)
-                            present -= baget.Amount * needed.Amount *
-                                baget.Width * baget.Lenght;
-                }
+
+                    foreach (Baget baget in order.Bagets)
+                    {
+                        foreach (Material needed in baget.Type.Materials)
+                            if (needed.Name == mat.Name)
+                                present -= baget.Amount * needed.Amount *
+                                    baget.Width * baget.Lenght;
+                    }
 
                 if (present > 0)
                 {
@@ -99,13 +141,12 @@ namespace BLL.Services
                     showMat += matString + "\n";
                 }
             }
-            database.Save();
             return enough;
         }
 
         public string showMaterials(OrderModel orderDTO)
         {
-            bool enough = IsEnough(orderDTO);
+            bool enough = IsEnough(Read(orderDTO));
             if (enough)
                 showMat += "Enough";
             else
@@ -116,9 +157,34 @@ namespace BLL.Services
         public OrderModel DelBaget(OrderModel orderDTO, BagetModel bagetDTO)
         {
             database.BagetRep.Delete(ReadBaget(bagetDTO));
-            return Load(Read(orderDTO).ID);
+            return Load(orderDTO.ID);
         }
-
+        private Baget ReadBaget(BagetModel model)
+        {
+            if (model == null)
+                throw new ReadModelException("Empty BagetModel");
+            Guid id = model.ID;
+            if (id == null)
+                throw new ReadModelException("Empty ID of BagetModel " + model);
+            Baget baget = database.BagetRep.GetByID(id);
+            if (baget == null)
+                throw new ReadModelException("No Baget with such ID " + id);
+            return baget;
+        }
+        private Order Read(OrderModel model)
+        {
+            if (model == null)
+                throw new ReadModelException("Empty OrderModel");
+            Guid id = model.ID;
+            if (id == null)
+                throw new ReadModelException("Empty ID of OrderModel " + model);
+            Order order = database.OrderRep.GetByID(id);
+            if (order == null)
+                throw new ReadModelException("No Order with such ID " + id);
+            return order;
+        }
+        
+        
         //public ObservableCollection<BagetModel> LoadBagets(Guid id)
         //{
         //    return BagetMapper.MapToModelList(database.OrderRep.LoadBagets(Read(id).ID));
@@ -129,48 +195,23 @@ namespace BLL.Services
         //    return OrderMapper.MapToModelList(database.OrderRep.GetAll());
         //}
 
-        private BagType ReadType(Guid id)
-        {
-            if (id == null)
-                throw new ValidationException("No type id", "");
-            BagType type = database.TypeRep.GetByID(id);
-            if (type == null)
-                throw new ValidationException("No type with such id", "");
-            return type;
-        }
-        private Baget ReadBaget(BagetModel model)
-        {
-            if (model == null)
-                throw new ValidationException("No baget model", "");
-            Guid id = model.ID;
-            if (id == null)
-                throw new ValidationException("No baget id", "");
-            Baget baget = database.BagetRep.GetByID(id);
-            if (baget == null)
-                throw new ValidationException("No baget with such id", "");
-            return baget;
-        }
-        private Order Read(Guid id)
-        {
-            if (id == null)
-                throw new ValidationException("No order id", "");
-            Order order = database.OrderRep.GetByID(id);
-            if (order == null)
-                throw new ValidationException("No order with such id", "");
-            return order;
-        }
-
-        private Order Read(OrderModel model)
-        {
-            if (model == null)
-                throw new ValidationException("No order model", "");
-            Guid id = model.ID;
-            if (id == null)
-                throw new ValidationException("No order id", "");
-            Order order = database.OrderRep.GetByID(id);
-            if (order == null)
-                throw new ValidationException("No order with such id", "");
-            return order;
-        }
+        //private BagType ReadType(Guid id)
+        //{
+        //    if (id == null)
+        //        throw new CustomException("No type id", "");
+        //    BagType type = database.TypeRep.GetByID(id);
+        //    if (type == null)
+        //        throw new CustomException("No type with such id", "");
+        //    return type;
+        //}
+        //private Order Read(Guid id)
+        //{
+        //    if (id == null)
+        //        throw new CustomException("No order id", "");
+        //    Order order = database.OrderRep.GetByID(id);
+        //    if (order == null)
+        //        throw new CustomException("No order with such id", "");
+        //    return order;
+        //}
     }
 }

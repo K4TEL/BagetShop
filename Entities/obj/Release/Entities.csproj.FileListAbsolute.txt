@@ -1,0 +1,6 @@
+C:\Users\Admin\source\repos\BagetShop\Entities\bin\Release\Entities.dll
+C:\Users\Admin\source\repos\BagetShop\Entities\bin\Release\Entities.pdb
+C:\Users\Admin\source\repos\BagetShop\Entities\obj\Release\Entities.csprojAssemblyReference.cache
+C:\Users\Admin\source\repos\BagetShop\Entities\obj\Release\Entities.csproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\BagetShop\Entities\obj\Release\Entities.dll
+C:\Users\Admin\source\repos\BagetShop\Entities\obj\Release\Entities.pdb

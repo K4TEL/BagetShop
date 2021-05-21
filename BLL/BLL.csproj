@@ -55,7 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Infrastructure\ServiceModule.cs" />
-    <Compile Include="Infrastructure\ValidationException.cs" />
+    <Compile Include="Infrastructure\DALException.cs" />
+    <Compile Include="Infrastructure\MapperException.cs" />
+    <Compile Include="Infrastructure\ReadModelException.cs" />
     <Compile Include="Interfaces\IBagetServ.cs" />
     <Compile Include="Interfaces\ICalcServ.cs" />
     <Compile Include="Interfaces\IGenServ.cs" />

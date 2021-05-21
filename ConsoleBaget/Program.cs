@@ -5,9 +5,11 @@ using Ninject;
 using Ninject.Modules;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ConsoleBaget
@@ -19,7 +21,9 @@ namespace ConsoleBaget
         static IBagetServ bagetServ;
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, user!");
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandleException);
+
+            Console.WriteLine("Setting services");
             try
             {
                 StandardKernel kernel = new StandardKernel(new ServiceModule());
@@ -34,6 +38,7 @@ namespace ConsoleBaget
                 Console.WriteLine("Dependencies error");
                 Environment.Exit(0);
             }
+
             Console.WriteLine("Connecting to DB");
             try
             {
@@ -44,6 +49,7 @@ namespace ConsoleBaget
                 Console.WriteLine("Database error");
                 Environment.Exit(0);
             }
+            Test();
             Menu();
         }
         static void Test()
@@ -90,7 +96,7 @@ namespace ConsoleBaget
             baget.OrderID = order.ID;
             baget.Lenght = "5,77";
             baget.Width = "5,5";
-            baget.Amount = "5";
+            baget.Amount = "4";
             baget.TypeID = typeServ.LoadAll()[0].ID;
 
             Console.WriteLine("Baget " + baget);
@@ -432,12 +438,16 @@ namespace ConsoleBaget
         {
             while (true)
             {
+                Console.ForegroundColor = ConsoleColor.White;
+
                 Console.WriteLine("================================= MENU");
                 Console.WriteLine("0 - Test");
                 Console.WriteLine("1 - Get All");
                 Console.WriteLine("2 - Get");
                 Console.WriteLine("3 - New Order");
                 Console.WriteLine("4 - Exit");
+
+                Console.ResetColor();
 
                 string command = Console.ReadLine();
 
@@ -478,6 +488,15 @@ namespace ConsoleBaget
                         break;
                 }
             }
+        }
+        static void CurrentDomain_UnhandleException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Oops, something went wrong!");
+            Console.WriteLine((e.ExceptionObject as Exception).Message);
+
+            Console.ResetColor();
+            Debug.WriteLine((e.ExceptionObject as Exception).InnerException);
         }
     }
 }

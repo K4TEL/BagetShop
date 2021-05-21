@@ -114,9 +114,9 @@ namespace WpfBaget.ViewModels
         //            {
         //                BagetModel baget = obj as BagetModel;
 
-        //                BagetViewModel = new BagetViewModel(
-        //                    this, baget, true);
-        //                SwitchView = 1;
+                        //BagetViewModel = new BagetViewModel(
+                        //    this, baget, true);
+                        //SwitchView = 1;
 
         //            }, (obj) => SelectedBaget != null));
         //    }
