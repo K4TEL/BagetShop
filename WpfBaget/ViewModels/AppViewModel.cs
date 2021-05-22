@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
+using Validators.Validators;
 using WpfBaget.Command;
 
 namespace WpfBaget.ViewModels
@@ -22,6 +23,8 @@ namespace WpfBaget.ViewModels
                 OnPropertyChanged("SwitchView");
             }
         }
+        private OrderValidator orderValidator;
+        private BagetValidator bagetValidator;
 
         private IOrderServ orderServ;
         private IBagetServ bagetServ;
@@ -46,11 +49,12 @@ namespace WpfBaget.ViewModels
                         baget.TypeID = SelectedType.ID;
                         if (edit)
                         {
-                            SelectedBaget = bagetServ.Save(baget, !edit);
-                            SelectedOrder = orderServ.Load(SelectedBaget.OrderID);
+                            SelectedBaget = bagetServ.Save(bagetValidator.Validate(baget), !edit);
+                            SelectedOrder = orderServ.Load(bagetValidator.EmptyIDCheck(SelectedBaget).OrderID);
                         }
                         else
-                            SelectedOrder = orderServ.AddBaget(SelectedOrder, baget);
+                            SelectedOrder = orderServ.AddBaget(orderValidator.EmptyIDCheck(SelectedOrder), 
+                                bagetValidator.Validate(baget));
 
                         SelectedType = null;
                         SelectedBaget = null;
@@ -89,7 +93,7 @@ namespace WpfBaget.ViewModels
                     {
                         OrderModel order = new OrderModel();
                         order.Customer = "???";
-                        SelectedOrder = orderServ.Save(order, true);
+                        SelectedOrder = orderServ.Save(orderValidator.Validate(order), true);
 
                         OnPropertyChanged("Orders");
                     }));
@@ -106,7 +110,7 @@ namespace WpfBaget.ViewModels
                     (saveOrderCommand = new RelayCommand(obj =>
                     {
                         OrderModel order = obj as OrderModel;
-                        SelectedOrder = orderServ.Save(order, false);
+                        SelectedOrder = orderServ.Save(orderValidator.Validate(order), false);
 
                         OnPropertyChanged("Orders");
 
@@ -126,7 +130,7 @@ namespace WpfBaget.ViewModels
                         OrderModel order = obj as OrderModel;
                         if (order != null)
                         {
-                            orderServ.Del(SelectedOrder);
+                            orderServ.Del(orderValidator.EmptyIDCheck(SelectedOrder));
                             SelectedOrder = null;
 
                             OnPropertyChanged("Orders");
@@ -191,7 +195,8 @@ namespace WpfBaget.ViewModels
                     {
                         BagetModel baget = obj as BagetModel;
 
-                        SelectedOrder = orderServ.DelBaget(SelectedOrder, baget);
+                        SelectedOrder = orderServ.DelBaget(orderValidator.EmptyIDCheck(SelectedOrder), 
+                            bagetValidator.EmptyIDCheck(baget));
                         SelectedBaget = null;
 
                         OnPropertyChanged("Bagets");
@@ -353,6 +358,9 @@ namespace WpfBaget.ViewModels
             orderServ = kernel.Get<IOrderServ>();
             bagetServ = kernel.Get<IBagetServ>();
             typeServ = kernel.Get<ITypeServ>();
+
+            orderValidator = new OrderValidator();
+            bagetValidator = new BagetValidator();
 
             Orders = orderServ.LoadAll();
             Types = typeServ.LoadAll();

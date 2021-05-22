@@ -1,0 +1,9 @@
+C:\Users\Admin\source\repos\BagetShop\Validators\bin\Debug\Validators.dll
+C:\Users\Admin\source\repos\BagetShop\Validators\bin\Debug\Validators.pdb
+C:\Users\Admin\source\repos\BagetShop\Validators\bin\Debug\Models.dll
+C:\Users\Admin\source\repos\BagetShop\Validators\bin\Debug\Models.pdb
+C:\Users\Admin\source\repos\BagetShop\Validators\obj\Debug\Validators.csprojAssemblyReference.cache
+C:\Users\Admin\source\repos\BagetShop\Validators\obj\Debug\Validators.csproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\BagetShop\Validators\obj\Debug\Validators.csproj.CopyComplete
+C:\Users\Admin\source\repos\BagetShop\Validators\obj\Debug\Validators.dll
+C:\Users\Admin\source\repos\BagetShop\Validators\obj\Debug\Validators.pdb

@@ -11,7 +11,8 @@
           "BLL": "1.0.0",
           "EntityFramework": "6.4.4",
           "Models": "1.0.0",
-          "Ninject": "3.3.4"
+          "Ninject": "3.3.4",
+          "Validators": "1.0.0"
         },
         "runtime": {
           "WpfBaget.dll": {}
@@ -253,6 +254,14 @@
         "runtime": {
           "Models.dll": {}
         }
+      },
+      "Validators/1.0.0": {
+        "dependencies": {
+          "Models": "1.0.0"
+        },
+        "runtime": {
+          "Validators.dll": {}
+        }
       }
     }
   },
@@ -486,6 +495,11 @@
       "sha512": ""
     },
     "Models/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Validators/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

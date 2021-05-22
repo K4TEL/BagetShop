@@ -57,7 +57,7 @@ namespace ConsoleBaget
                 Console.WriteLine("Database error");
                 Environment.Exit(0);
             }
-            Test();
+            //Test();
             Menu();
         }
         static void Test()
@@ -474,11 +474,12 @@ namespace ConsoleBaget
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Oops, something went wrong!");
+
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine((e.ExceptionObject as Exception).Message);
+            Console.WriteLine("Exception Message: " + (e.ExceptionObject as Exception).Message);
 
             if ((e.ExceptionObject as Exception).InnerException != null)
-                Console.WriteLine((e.ExceptionObject as Exception).InnerException.Message);
+                Console.WriteLine("Inner Exception Message: " + (e.ExceptionObject as Exception).InnerException.Message);
 
             if (e.ExceptionObject.GetType() == typeof(ValidationException)) 
             {
@@ -493,6 +494,7 @@ namespace ConsoleBaget
             
             Console.ResetColor();
 
+            Console.WriteLine("Exception itself:");
             Console.WriteLine(e.ExceptionObject.ToString());
 
             Console.WriteLine("Press Enter to Exit");

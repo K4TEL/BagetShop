@@ -24,3 +24,5 @@ C:\Users\Admin\source\repos\BagetShop\ConsoleBaget\obj\Debug\ConsoleBaget.pdb
 C:\Users\Admin\source\repos\BagetShop\ConsoleBaget\bin\Debug\BLL.dll.config
 C:\Users\Admin\source\repos\BagetShop\ConsoleBaget\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\Admin\source\repos\BagetShop\ConsoleBaget\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Admin\source\repos\BagetShop\ConsoleBaget\bin\Debug\Validators.dll
+C:\Users\Admin\source\repos\BagetShop\ConsoleBaget\bin\Debug\Validators.pdb

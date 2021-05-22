@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
+using Validators;
 using WpfBaget.ViewModels;
 using WpfBaget.Views;
 
@@ -48,11 +49,18 @@ namespace WpfBaget
         {
             e.Handled = true;
 
-            string ErrorMessage = string.Format("Oops, something went wrong!\n"
-                + e.Exception.Message + "\n"
-                + (e.Exception.InnerException != null ? e.Exception.InnerException.Message + "\n" : null)
-                + "Please check your data and repeat the action\n"
-                + "Click Да to contine and Нет to close the application");
+            string ErrorMessage = "Oops, something went wrong!\n" + e.Exception.Message + "\n";
+
+            if (e.Exception.InnerException != null)
+                ErrorMessage += "Inner Exception Message: " + e.Exception.InnerException.Message + "\n";
+
+            if (e.Exception.GetType() == typeof(ValidationException))
+            {
+                if ((e.Exception as ValidationException).Property != null)
+                    ErrorMessage += "Model: " + (e.Exception as ValidationException).Model + "\n"
+                            + "Incorrect value: " + (e.Exception as ValidationException).Property + "\n";
+            }
+            ErrorMessage += "Please check your data and repeat the action\n" + "Continue?";
 
             if (MessageBox.Show(ErrorMessage, "Error", 
                 MessageBoxButton.YesNoCancel, 

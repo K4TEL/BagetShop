@@ -28,17 +28,17 @@ namespace Validators.Validators
         {
             model = EmptyModelCheck(model);
 
-            if (model.Amount == null)
+            if (model.Amount == null || model.Amount.Length == 0)
                 throw new ValidationException("Empty Amount", model);
             if (!int.TryParse(model.Amount, out int amount))
                 throw new ValidationException("Can't parse Amount", model.Amount, model);
 
-            if (model.Lenght == null)
+            if (model.Lenght == null || model.Lenght.Length == 0)
                 throw new ValidationException("Empty Lenght", model);
             if (!Double.TryParse(model.Lenght, out Double lenght))
                 throw new ValidationException("Can't parse Lenght", model.Lenght, model);
 
-            if (model.Width == null)
+            if (model.Width == null || model.Width.Length == 0)
                 throw new ValidationException("Empty Width", model);
             if (!Double.TryParse(model.Width, out Double width))
                 throw new ValidationException("Can't parse Width", model.Width, model);
