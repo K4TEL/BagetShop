@@ -1,6 +1,5 @@
 ﻿using BLL.Infrastructure;
 using BLL.Interfaces;
-using ConsoleBaget.Validators;
 using Models;
 using Ninject;
 using Ninject.Modules;
@@ -12,6 +11,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Validators;
+using Validators.Validators;
 
 namespace ConsoleBaget
 {
@@ -103,7 +104,7 @@ namespace ConsoleBaget
             baget.OrderID = order.ID;
             baget.Lenght = "5,77";
             baget.Width = "5,9";
-            baget.Amount = "4";
+            baget.Amount = "1";
             baget.TypeID = typeServ.LoadAll()[0].ID;
 
             Console.WriteLine("Baget " + baget);
@@ -473,9 +474,23 @@ namespace ConsoleBaget
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Oops, something went wrong!");
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine((e.ExceptionObject as Exception).Message);
+
             if ((e.ExceptionObject as Exception).InnerException != null)
                 Console.WriteLine((e.ExceptionObject as Exception).InnerException.Message);
+
+            if (e.ExceptionObject.GetType() == typeof(ValidationException)) 
+            {
+                if ((e.ExceptionObject as ValidationException).Property != null)
+                {
+                    Console.WriteLine("Model: " + (e.ExceptionObject
+                        as ValidationException).Model);
+                    Console.WriteLine("Incorrect value: " + (e.ExceptionObject
+                        as ValidationException).Property);
+                }
+            }
+            
             Console.ResetColor();
 
             Console.WriteLine(e.ExceptionObject.ToString());

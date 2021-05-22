@@ -93,6 +93,25 @@
         "net472": {}
       }
     },
+    "C:\\Users\\Admin\\source\\repos\\BagetShop\\Validators\\Validators.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\BagetShop\\Validators\\Validators.csproj",
+        "projectName": "Validators",
+        "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\Validators\\Validators.csproj",
+        "frameworks": {
+          "net472": {
+            "projectReferences": {
+              "C:\\Users\\Admin\\source\\repos\\BagetShop\\Models\\Models.csproj": {
+                "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\Models\\Models.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    },
     "C:\\Users\\Admin\\source\\repos\\BagetShop\\WpfBaget\\WpfBaget.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -122,6 +141,9 @@
               },
               "C:\\Users\\Admin\\source\\repos\\BagetShop\\Models\\Models.csproj": {
                 "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\Models\\Models.csproj"
+              },
+              "C:\\Users\\Admin\\source\\repos\\BagetShop\\Validators\\Validators.csproj": {
+                "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\Validators\\Validators.csproj"
               }
             }
           }

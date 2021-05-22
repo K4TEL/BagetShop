@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WpfBaget.Interfaces
+namespace Validators.Interfaces
 {
     public interface IValidator<T> where T : class
     {

@@ -56,12 +56,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IValidator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Validators\BagetValidator.cs" />
-    <Compile Include="Validators\OrderValidator.cs" />
-    <Compile Include="Validators\ValidationException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -75,6 +71,10 @@
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{ef83dfd9-343d-4f1c-9a72-9171b7ea1e98}</Project>
       <Name>Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Validators\Validators.csproj">
+      <Project>{305cb011-4190-46ca-8ead-6e575e32630f}</Project>
+      <Name>Validators</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -457,6 +457,18 @@
         "runtime": {
           "bin/placeholder/Models.dll": {}
         }
+      },
+      "Validators/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "Models": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Validators.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Validators.dll": {}
+        }
       }
     }
   },
@@ -1787,6 +1799,11 @@
       "type": "project",
       "path": "../Models/Models.csproj",
       "msbuildProject": "../Models/Models.csproj"
+    },
+    "Validators/1.0.0": {
+      "type": "project",
+      "path": "../Validators/Validators.csproj",
+      "msbuildProject": "../Validators/Validators.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -1794,7 +1811,8 @@
       "BLL >= 1.0.0",
       "EntityFramework >= 6.4.4",
       "Models >= 1.0.0",
-      "Ninject >= 3.3.4"
+      "Ninject >= 3.3.4",
+      "Validators >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -1829,6 +1847,9 @@
             },
             "C:\\Users\\Admin\\source\\repos\\BagetShop\\Models\\Models.csproj": {
               "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\Models\\Models.csproj"
+            },
+            "C:\\Users\\Admin\\source\\repos\\BagetShop\\Validators\\Validators.csproj": {
+              "projectPath": "C:\\Users\\Admin\\source\\repos\\BagetShop\\Validators\\Validators.csproj"
             }
           }
         }

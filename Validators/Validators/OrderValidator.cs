@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ConsoleBaget.Interfaces;
+using Validators.Interfaces;
 
-namespace ConsoleBaget.Validators
+namespace Validators.Validators
 {
     public class OrderValidator : IValidator<OrderModel>
     {

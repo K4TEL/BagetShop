@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ConsoleBaget.Interfaces;
+using Validators.Interfaces;
 
-namespace ConsoleBaget.Validators
+namespace Validators.Validators
 {
     public class BagetValidator : IValidator<BagetModel>
     {
@@ -29,19 +29,19 @@ namespace ConsoleBaget.Validators
             model = EmptyModelCheck(model);
 
             if (model.Amount == null)
-                throw new ValidationException("Empty amount", model);
+                throw new ValidationException("Empty Amount", model);
             if (!int.TryParse(model.Amount, out int amount))
-                throw new ValidationException("Incorrect amount", model.Amount, model);
+                throw new ValidationException("Can't parse Amount", model.Amount, model);
 
             if (model.Lenght == null)
-                throw new ValidationException("Empty lenght", model);
+                throw new ValidationException("Empty Lenght", model);
             if (!Double.TryParse(model.Lenght, out Double lenght))
-                throw new ValidationException("Incorrect lenght", model.Lenght, model);
+                throw new ValidationException("Can't parse Lenght", model.Lenght, model);
 
             if (model.Width == null)
-                throw new ValidationException("Empty width", model);
+                throw new ValidationException("Empty Width", model);
             if (!Double.TryParse(model.Width, out Double width))
-                throw new ValidationException("Incorrect width", model.Width, model);
+                throw new ValidationException("Can't parse Width", model.Width, model);
 
             if (model.OrderID == null || model.OrderID == Guid.Empty)
                 throw new ValidationException("Empty Order ID", model);
