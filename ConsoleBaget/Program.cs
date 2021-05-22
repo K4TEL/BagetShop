@@ -248,38 +248,65 @@ namespace ConsoleBaget
                 case "1":
                     Console.WriteLine("Index of Order");
                     string id = Console.ReadLine();
-                    try
+                    if (!int.TryParse(id, out int index1) || index1 > orderServ.LoadAll().Count)
                     {
-                        OrderModel order = orderServ.LoadAll()[int.Parse(id)];
-                        Console.WriteLine("Order " + order);
-                        for (int i = 0; i < order.Bagets.Count; i++)
-                            Console.WriteLine(i + " - Baget " + order.Bagets[i]);
-                        Order(order);
+                        Console.WriteLine("Incorrect index");
+                        Menu();
                     }
-                    catch { Console.WriteLine("XXX Order not found XXX"); }
+                    OrderModel order = orderServ.LoadAll()[index1];
+                    Console.WriteLine("Order " + order);
+                    for (int i = 0; i < order.Bagets.Count; i++)
+                        Console.WriteLine(i + " - Baget " + order.Bagets[i]);
+                    Order(order);
+                    //try
+                    //{
+                    //    OrderModel order = orderServ.LoadAll()[index];
+                    //    Console.WriteLine("Order " + order);
+                    //    for (int i = 0; i < order.Bagets.Count; i++)
+                    //        Console.WriteLine(i + " - Baget " + order.Bagets[i]);
+                    //    Order(order);
+                    //}
+                    //catch { Console.WriteLine("XXX Order not found XXX"); }
                     break;
                 case "2":
                     Console.WriteLine("Index of Baget"); ;
                     id = Console.ReadLine();
-                    try
+                    if (!int.TryParse(id, out int index2) || index2 > bagetServ.LoadAll().Count)
                     {
-                        BagetModel baget = bagetServ.LoadAll().ToList()[int.Parse(id)];
-                        Console.WriteLine("Baget " + baget);
-                        Baget(baget);
+                        Console.WriteLine("Incorrect index");
+                        Menu();
                     }
-                    catch { Console.WriteLine("XXX Baget not found XXX"); }
+                    BagetModel baget = bagetServ.LoadAll().ToList()[index2];
+                    Console.WriteLine("Baget " + baget);
+                    Baget(baget);
+                    //try
+                    //{
+                    //    BagetModel baget = bagetServ.LoadAll().ToList()[index2];
+                    //    Console.WriteLine("Baget " + baget);
+                    //    Baget(baget);
+                    //}
+                    //catch { Console.WriteLine("XXX Baget not found XXX"); }
                     break;
                 case "3":
                     Console.WriteLine("Index of Type");
                     id = Console.ReadLine();
-                    try
+                    if (!int.TryParse(id, out int index3) || index3 > typeServ.LoadAll().Count)
                     {
-                        TypeModel bagtype = typeServ.LoadAll().ToList()[int.Parse(id)];
-                        Console.WriteLine("Type " + bagtype);
-                        foreach (MaterialModel m in bagtype.Materials)
-                            Console.WriteLine("-Material " + m);
+                        Console.WriteLine("Incorrect index");
+                        Menu();
                     }
-                    catch { Console.WriteLine("XXX Type not found XXX"); }
+                    TypeModel bagtype = typeServ.LoadAll().ToList()[index3];
+                    Console.WriteLine("Type " + bagtype);
+                    foreach (MaterialModel m in bagtype.Materials)
+                        Console.WriteLine("-Material " + m);
+                    //try
+                    //{
+                    //    TypeModel bagtype = typeServ.LoadAll().ToList()[index3];
+                    //    Console.WriteLine("Type " + bagtype);
+                    //    foreach (MaterialModel m in bagtype.Materials)
+                    //        Console.WriteLine("-Material " + m);
+                    //}
+                    //catch { Console.WriteLine("XXX Type not found XXX"); }
                     break;
                 case "4":
                     Menu();
@@ -356,13 +383,21 @@ namespace ConsoleBaget
                         Console.WriteLine(i + " - Baget " + order.Bagets[i]);
                     Console.WriteLine("Index of Baget");
                     string id = Console.ReadLine();
-                    try
+                    if (!int.TryParse(id, out int index) || index > order.Bagets.Count)
                     {
-                        baget = order.Bagets[int.Parse(id)];
-                        Console.WriteLine("Baget " + baget);
-                        Baget(baget);
+                        Console.WriteLine("Incorrect index");
+                        Menu();
                     }
-                    catch { Console.WriteLine("XXX Baget not found XXX"); }
+                    baget = order.Bagets[index];
+                    Console.WriteLine("Baget " + baget);
+                    //Baget(baget);
+                    //try
+                    //{
+                    //    baget = order.Bagets[index];
+                    //    Console.WriteLine("Baget " + baget);
+                    //    Baget(baget);
+                    //}
+                    //catch { Console.WriteLine("XXX Baget not found XXX"); }
                     break;
                 case "5":
                     Menu();
@@ -380,19 +415,28 @@ namespace ConsoleBaget
             string value = Console.ReadLine();
             if (value == "")
                 baget.TypeID = isNew ? typeServ.LoadAll()[0].ID : baget.TypeID;
+            else if (!int.TryParse(value, out int index) || index > typeServ.LoadAll().Count)
+            {
+                Console.WriteLine("Incorrect index");
+                Menu();
+            }
             else
             {
-                try
-                {
-                    TypeModel bagtype = typeServ.LoadAll()[int.Parse(value)];
-                    baget.TypeID = bagtype.ID;
-                }
-                catch
-                {
-                    Console.WriteLine("XXX Type not found XXX");
-                    return;
-                }
+                TypeModel bagtype = typeServ.LoadAll()[index];
+                baget.TypeID = bagtype.ID;
             }
+            
+                //try
+                //{
+                //    TypeModel bagtype = typeServ.LoadAll()[index];
+                //    baget.TypeID = bagtype.ID;
+                //}
+                //catch
+                //{
+                //    Console.WriteLine("XXX Type not found XXX");
+                //    return;
+                //}
+            
 
             Console.WriteLine("Width " + baget.Width);
             value = Console.ReadLine();
@@ -412,12 +456,15 @@ namespace ConsoleBaget
                 baget.Amount = isNew ? "0" : baget.Amount;
             else
                 baget.Amount = value;
-            try
-            {
-                baget = bagetServ.Save(baget, isNew);
-                Console.WriteLine("Baget saved " + baget);
-            }
-            catch { Console.WriteLine("XXX Baget not saved XXX"); }
+
+            baget = bagetServ.Save(baget, isNew);
+            Console.WriteLine("Baget saved " + baget);
+            //try
+            //{
+            //    baget = bagetServ.Save(baget, isNew);
+            //    Console.WriteLine("Baget saved " + baget);
+            //}
+            //catch { Console.WriteLine("XXX Baget not saved XXX"); }
         }
         static void OrderEdit(OrderModel order, bool isNew)
         {
@@ -427,12 +474,14 @@ namespace ConsoleBaget
                 order.Customer = isNew ? "???" : order.Customer;
             else
                 order.Customer = value;
-            try
-            {
-                order = orderServ.Save(order, isNew);
-                Console.WriteLine("Order saved " + order);
-            }
-            catch { Console.WriteLine("XXX Order not saved XXX"); }
+            order = orderServ.Save(order, isNew);
+            Console.WriteLine("Order saved " + order);
+            //try
+            //{
+            //    order = orderServ.Save(order, isNew);
+            //    Console.WriteLine("Order saved " + order);
+            //}
+            //catch { Console.WriteLine("XXX Order not saved XXX"); }
         }
         static void Menu()
         {
@@ -497,6 +546,7 @@ namespace ConsoleBaget
 
             Console.ResetColor();
             Debug.WriteLine((e.ExceptionObject as Exception).InnerException);
+            Menu();
         }
     }
 }

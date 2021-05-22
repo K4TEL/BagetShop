@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
-    public interface IOrderRep : IGenRep<Order>
+    public interface IOrderRep : IGenRep<Order, Guid>
     {
         Order Load(Guid id);
         IEnumerable<Order> LoadAll();

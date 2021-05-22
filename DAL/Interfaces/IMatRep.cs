@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
-    public interface IMatRep : IGenRep<Material>
+    public interface IMatRep : IGenRep<Material, Guid>
     {
         Material Load(Guid id);
         IEnumerable<Material> LoadAll();

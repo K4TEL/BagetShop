@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
-    public class MatRep : GenRep<Material>, IMatRep
+    public class MatRep : GenRep<Material, Guid>, IMatRep
     {
         BagetContext db;
         DbSet<Material> set;

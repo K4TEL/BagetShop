@@ -213,7 +213,10 @@ namespace WpfBaget.ViewModels
                         OrderModel order = obj as OrderModel;
 
                         MessageBoxResult result = MessageBox.Show(
-                            orderServ.showMaterials(order));
+                            orderServ.showMaterials(order),
+                            "Order Materials",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Information);
 
                     }, (obj) => SelectedOrder != null && Bagets.Count > 0));
             }

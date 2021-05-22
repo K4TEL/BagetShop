@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
-    public interface ITypeRep : IGenRep<BagType>
+    public interface ITypeRep : IGenRep<BagType, Guid>
     {
         BagType Load(Guid id);
         IEnumerable<BagType> LoadAll();

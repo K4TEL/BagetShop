@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
-    public class TypeRep : GenRep<BagType>, ITypeRep
+    public class TypeRep : GenRep<BagType, Guid>, ITypeRep
     {
         BagetContext db;
         DbSet<BagType> set;

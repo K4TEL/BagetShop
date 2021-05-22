@@ -109,7 +109,7 @@ namespace WpfBaget.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/WpfBaget;component/views/bagetview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/WpfBaget;V1.0.0.0;component/views/bagetview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Views\BagetView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

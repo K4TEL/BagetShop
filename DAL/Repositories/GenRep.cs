@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
-    public class GenRep<T> : IGenRep<T> where T : class
+    public class GenRep<T, Key> : IGenRep<T, Key> where T : class
     {
         BagetContext db;
         DbSet<T> set;
@@ -43,7 +43,7 @@ namespace DAL.Repositories
             return set.AsNoTracking().ToList();
         }
 
-        public virtual T GetByID(Guid id)
+        public virtual T GetByID(Key id)
         {
             return set.Find(id);
         }

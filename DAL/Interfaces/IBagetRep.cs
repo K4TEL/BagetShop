@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
-    public interface IBagetRep : IGenRep<Baget>
+    public interface IBagetRep : IGenRep<Baget, Guid>
     {
         Baget Load(Guid id);
         IEnumerable<Baget> LoadAll();
