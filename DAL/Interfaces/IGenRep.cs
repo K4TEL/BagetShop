@@ -10,7 +10,7 @@ namespace DAL.Interfaces
     public interface IGenRep<T, Key> where T : class
     {
         IEnumerable<T> GetAll();
-        IEnumerable<T> Find(Func<T, Boolean> predicate);
+        //IEnumerable<T> Find(Func<T, Boolean> predicate);
         T GetByID(Key id);
         void Create(T entity);
         void Update(T entity);

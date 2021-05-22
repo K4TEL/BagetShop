@@ -13,6 +13,6 @@ namespace DAL.Interfaces
         IEnumerable<Baget> LoadAll();
 
         BagType LoadType(Guid id);
-        Order LoadOrder(Guid id);
+        //Order LoadOrder(Guid id);
     }
 }

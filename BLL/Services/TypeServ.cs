@@ -10,7 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Models;
 using Mappers;
-using Mappers.Util;
 
 namespace BLL.Services
 {
@@ -30,12 +29,11 @@ namespace BLL.Services
         {
             try
             {
-                BagType type = database.TypeRep.Load(id);
-                return type.MapToModel();
+                return database.TypeRep.Load(id).MapToModel();
             }
-            catch (ValidationException e)
+            catch (NullReferenceException e)
             {
-                throw new MapperException(e.Message + " with ID " + id, e);
+                throw new DALException("Can't find BagType with ID " + id, e);
             }
         }
     }

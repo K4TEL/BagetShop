@@ -12,7 +12,7 @@ namespace DAL.Interfaces
         Order Load(Guid id);
         IEnumerable<Order> LoadAll();
 
-        IEnumerable<Baget> LoadBagets(Guid id);
+        //IEnumerable<Baget> LoadBagets(Guid id);
 
     }
 }

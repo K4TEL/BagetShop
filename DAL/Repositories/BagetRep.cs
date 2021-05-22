@@ -20,13 +20,13 @@ namespace DAL.Repositories
             this.set = context.Set<Baget>();
         }
 
-        public Order LoadOrder(Guid id)
-        {
-            return set
-                .Include(b => b.Order)
-                .FirstOrDefault(b => b.ID == id)
-                .Order;
-        }
+        //public Order LoadOrder(Guid id)
+        //{
+        //    return set
+        //        .Include(b => b.Order)
+        //        .FirstOrDefault(b => b.ID == id)
+        //        .Order;
+        //}
 
         public BagType LoadType(Guid id)
         {

@@ -9,11 +9,11 @@ namespace DAL.Interfaces
 {
     public interface IMatRep : IGenRep<Material, Guid>
     {
-        Material Load(Guid id);
-        IEnumerable<Material> LoadAll();
+        //Material Load(Guid id);
+        //IEnumerable<Material> LoadAll();
         IEnumerable<Material> Storage();
 
-        BagType LoadType(Guid id);
+        //BagType LoadType(Guid id);
 
     }
 }

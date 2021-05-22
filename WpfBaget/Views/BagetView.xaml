@@ -26,15 +26,15 @@
 
         <StackPanel Grid.Column="0" Grid.Row="0">
             <TextBlock Text="Amount" Margin="10 10 10 5"/>
-            <TextBox x:Name="amo" Text="{Binding Amount, TargetNullValue='1', 
+            <TextBox x:Name="amo" Text="{Binding Amount, 
                 UpdateSourceTrigger=PropertyChanged, FallbackValue='1'}" 
                      Margin="10 5 10 10" Background="Black" Foreground="White"/>
             <TextBlock Text="Width" Margin="10 10 10 5"/>
-            <TextBox x:Name="wid" Text="{Binding Width, TargetNullValue='0.1', 
+            <TextBox x:Name="wid" Text="{Binding Width, 
                 UpdateSourceTrigger=PropertyChanged, FallbackValue='0.1'}"
                      Margin="10 5 10 10" Background="Black" Foreground="White"/>
             <TextBlock Text="Lenght" Margin="10 10 10 5"/>
-            <TextBox x:Name="len" Text="{Binding Lenght, TargetNullValue='0.1', 
+            <TextBox x:Name="len" Text="{Binding Lenght, 
                 UpdateSourceTrigger=PropertyChanged, FallbackValue='0.1'}"
                      Margin="10 5 10 10" Background="Black" Foreground="White"/>
             <TextBlock Margin="10">

@@ -12,6 +12,6 @@ namespace DAL.Interfaces
         BagType Load(Guid id);
         IEnumerable<BagType> LoadAll();
 
-        IEnumerable<Material> LoadMaterials(Guid id);
+        //IEnumerable<Material> LoadMaterials(Guid id);
     }
 }

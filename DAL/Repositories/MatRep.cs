@@ -21,28 +21,28 @@ namespace DAL.Repositories
             this.db = context;
             this.set = context.Set<Material>();
         }
-        public Material Load(Guid id)
-        {
-            return set
-                .Include(m => m.Type)
-                .FirstOrDefault(m => m.ID == id);
-        }
+        //public Material Load(Guid id)
+        //{
+        //    return set
+        //        .Include(m => m.Type)
+        //        .FirstOrDefault(m => m.ID == id);
+        //}
 
-        public IEnumerable<Material> LoadAll()
-        {
-            return set
-                .Include(m => m.Type)
-                .Where(m => !m.Storage)
-                .ToList();
-        }
+        //public IEnumerable<Material> LoadAll()
+        //{
+        //    return set
+        //        .Include(m => m.Type)
+        //        .Where(m => !m.Storage)
+        //        .ToList();
+        //}
 
-        public BagType LoadType(Guid id)
-        {
-            return set
-                .Include(m => m.Type)
-                .FirstOrDefault(m => m.ID == id)
-                .Type;
-        }
+        //public BagType LoadType(Guid id)
+        //{
+        //    return set
+        //        .Include(m => m.Type)
+        //        .FirstOrDefault(m => m.ID == id)
+        //        .Type;
+        //}
 
         public IEnumerable<Material> Storage()
         {

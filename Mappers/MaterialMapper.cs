@@ -1,5 +1,4 @@
 ﻿using Entities;
-using Mappers.Util;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -12,11 +11,8 @@ namespace Mappers
 {
     public static class MaterialMapper
     {
-        public static MaterialModel MapToModel(this Material entity)
+        public static MaterialModel MapToModel(this Material entity) 
         {
-            if (entity == null)
-                throw new ValidationException("Empty Material entity");
-
             return new MaterialModel
             {
                 ID = entity.ID,
@@ -31,9 +27,6 @@ namespace Mappers
         public static ObservableCollection<MaterialModel> MapToModelList(
             this IEnumerable<Material> entities)
         {
-            if (entities == null)
-                throw new ValidationException("Empty Material list");
-
             return new ObservableCollection<MaterialModel>
                 (from entity in entities select MapToModel(entity));
         }

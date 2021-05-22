@@ -34,12 +34,12 @@ namespace DAL.Repositories
                 .ToList();
         }
 
-        public IEnumerable<Material> LoadMaterials(Guid id)
-        {
-            return set
-                .Include(t => t.Materials)
-                .FirstOrDefault(t => t.ID == id)
-                .Materials;
-        }
+        //public IEnumerable<Material> LoadMaterials(Guid id)
+        //{
+        //    return set
+        //        .Include(t => t.Materials)
+        //        .FirstOrDefault(t => t.ID == id)
+        //        .Materials;
+        //}
     }
 }

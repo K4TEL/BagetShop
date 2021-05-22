@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mappers.Util
+namespace ConsoleBaget.Validators
 {
     [Serializable]
     public class ValidationException : Exception
@@ -14,11 +14,17 @@ namespace Mappers.Util
 
         public bool isNull { get; protected set; }
 
-        public ValidationException(string message, string prop) 
-            : base(message) { this.Property = prop; }
+        //public ValidationException(string message, string prop) 
+        //    : base(message) { this.Property = prop; }
+
+        public ValidationException(string message, string prop, object model)
+            : base(message + " " + prop + " in " + model.GetType().Name) { this.Property = prop; }
 
         public ValidationException(string message)
             : base(message) { this.isNull = true; }
+
+        public ValidationException(string message, object model)
+           : base(message + " in " + model.GetType().Name) { this.isNull = true; }
 
         protected ValidationException(SerializationInfo info, StreamingContext context) 
             : base(info, context) { }

@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Mappers;
 using Models;
 using System.Data.Entity.Infrastructure;
-using Mappers.Util;
 
 namespace BLL.Services
 {
@@ -23,7 +22,7 @@ namespace BLL.Services
         {
             this.database = uow;
         }
-        
+
         public ObservableCollection<OrderModel> LoadAll()
         {
             return database.OrderRep.LoadAll().MapToModelList();
@@ -35,9 +34,9 @@ namespace BLL.Services
             {
                 return database.OrderRep.Load(id).MapToModel();
             }
-            catch (ValidationException e)
+            catch (NullReferenceException e)
             {
-                throw new MapperException(e.Message + " with ID " + id, e);
+                throw new DALException("Can't find Order with ID " + id, e);
             }
         }
 
@@ -52,7 +51,7 @@ namespace BLL.Services
             }
             else
             {
-                Order order = Read(orderDTO);
+                Order order = database.OrderRep.GetByID(orderDTO.ID);
                 order.UpdateOrderCustomer(orderDTO);
                 database.OrderRep.Update(order);
                 return Load(order.ID);
@@ -66,20 +65,13 @@ namespace BLL.Services
 
                 throw new DALException("OrderModel is incorrect! Unable to " + action + " Order " + orderDTO, e);
             }
-            catch (ValidationException e)
-            {
-                if (e.isNull)
-                    throw new MapperException(e.Message + " in OrderModel to Save", e);
-
-                throw new MapperException(e.Message + " " + e.Property + " in OrderModel " + orderDTO, e);
-            }
         }
 
         public void Del(OrderModel orderDTO)
         {
             try
             {
-                database.OrderRep.Delete(Read(orderDTO));
+                database.OrderRep.Delete(database.OrderRep.GetByID(orderDTO.ID));
             } 
             catch (DbUpdateException e)
             {
@@ -91,21 +83,13 @@ namespace BLL.Services
         {
             try
             {
-                //BagType type = ReadType(bagetDTO.TypeID);
                 Baget baget = bagetDTO.NewBagetEntity();
                 database.BagetRep.Create(baget);
                 return Load(orderDTO.ID);
             }
             catch (DbUpdateException e)
             {
-                throw new DALException("BagetModel is incorrect! Unable create Baget " + bagetDTO, e);
-            }
-            catch (ValidationException e)
-            {
-                if (e.isNull)
-                    throw new MapperException(e.Message + " in BagetModel to Save", e);
-
-                throw new MapperException(e.Message + " " + e.Property + " in BagetModel " + bagetDTO, e);
+                throw new DALException("BagetModel is incorrect! Unable to create Baget " + bagetDTO, e);
             }
         }
 
@@ -146,7 +130,7 @@ namespace BLL.Services
 
         public string showMaterials(OrderModel orderDTO)
         {
-            bool enough = IsEnough(Read(orderDTO));
+            bool enough = IsEnough(database.OrderRep.GetByID(orderDTO.ID));
             if (enough)
                 showMat += "Enough";
             else
@@ -156,33 +140,33 @@ namespace BLL.Services
 
         public OrderModel DelBaget(OrderModel orderDTO, BagetModel bagetDTO)
         {
-            database.BagetRep.Delete(ReadBaget(bagetDTO));
+            database.BagetRep.Delete(database.BagetRep.GetByID(bagetDTO.ID));
             return Load(orderDTO.ID);
         }
-        private Baget ReadBaget(BagetModel model)
-        {
-            if (model == null)
-                throw new ReadModelException("Empty BagetModel");
-            Guid id = model.ID;
-            if (id == null)
-                throw new ReadModelException("Empty ID of BagetModel " + model);
-            Baget baget = database.BagetRep.GetByID(id);
-            if (baget == null)
-                throw new ReadModelException("No Baget with such ID " + id);
-            return baget;
-        }
-        private Order Read(OrderModel model)
-        {
-            if (model == null)
-                throw new ReadModelException("Empty OrderModel");
-            Guid id = model.ID;
-            if (id == null)
-                throw new ReadModelException("Empty ID of OrderModel " + model);
-            Order order = database.OrderRep.GetByID(id);
-            if (order == null)
-                throw new ReadModelException("No Order with such ID " + id);
-            return order;
-        }
+        //private Baget ReadBaget(BagetModel model)
+        //{
+        //    if (model == null)
+        //        throw new ReadModelException("Empty BagetModel");
+        //    Guid id = model.ID;
+        //    if (id == null)
+        //        throw new ReadModelException("Empty ID of BagetModel " + model);
+        //    Baget baget = database.BagetRep.GetByID(id);
+        //    if (baget == null)
+        //        throw new ReadModelException("No Baget with such ID " + id);
+        //    return baget;
+        //}
+        //private Order Read(OrderModel model)
+        //{
+        //    if (model == null)
+        //        throw new ReadModelException("Empty OrderModel");
+        //    Guid id = model.ID;
+        //    if (id == null)
+        //        throw new ReadModelException("Empty ID of OrderModel " + model);
+        //    Order order = database.OrderRep.GetByID(id);
+        //    if (order == null)
+        //        throw new ReadModelException("No Order with such ID " + id);
+        //    return order;
+        //}
         
         
         //public ObservableCollection<BagetModel> LoadBagets(Guid id)
