@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Models;
 using Mappers;
 using System.Data.Entity.Infrastructure;
-using Mappers.Util;
 
 namespace BLL.Services
 {
@@ -29,14 +28,7 @@ namespace BLL.Services
 
         public BagetModel Load(Guid id)
         {
-            try
-            {
-                return database.BagetRep.Load(id).MapToModel();
-            }
-            catch (ValidationException e)
-            {
-                throw new MapperException(e.Message + " with ID " + id, e);
-            }
+            return database.BagetRep.Load(id).MapToModel();
         }
 
         public BagetModel Save(BagetModel bagetDTO, bool isNew)
@@ -51,7 +43,7 @@ namespace BLL.Services
                 }
                 else
                 {
-                    Baget baget = Read(bagetDTO);
+                    Baget baget = database.BagetRep.GetByID(bagetDTO.ID);
                     baget.UpdateBagetEntity(bagetDTO);
                     database.BagetRep.Update(baget);
                     return Load(baget.ID);
@@ -64,20 +56,13 @@ namespace BLL.Services
                     action = "create";
                 throw new DALException("BagetModel is incorrect! Unable to " + action + " Baget", e);
             } 
-            catch (ValidationException e)
-            {
-                if (e.isNull)
-                    throw new MapperException(e.Message + " in BagetModel to Save", e);
-
-                throw new MapperException(e.Message + " " + e.Property + " in BagetModel " + bagetDTO, e);
-            }
         }
 
         public void Del(BagetModel bagetDTO)
         {
             try
             {
-                database.BagetRep.Delete(Read(bagetDTO));
+                database.BagetRep.Delete(database.BagetRep.GetByID(bagetDTO.ID));
             }
             catch (DbUpdateException e)
             {
@@ -87,28 +72,21 @@ namespace BLL.Services
 
         public TypeModel LoadType(Guid id)
         {
-            try
-            {
-                return database.BagetRep.LoadType(id).MapToModel();
-            }
-            catch (ValidationException e)
-            {
-                throw new MapperException(e.Message + " with ID " + id, e);
-            }
+            return database.BagetRep.LoadType(id).MapToModel();
         }
 
-        private Baget Read(BagetModel model)
-        {
-            if (model == null)
-                throw new ReadModelException("Empty BagetModel");
-            Guid id = model.ID;
-            if (id == null)
-                throw new ReadModelException("Empty ID of BagetModel " + model);
-            Baget baget = database.BagetRep.GetByID(id);
-            if (baget == null)
-                throw new ReadModelException("No Baget with such ID " + id);
-            return baget;
-        }
+        //private Baget Read(BagetModel model)
+        //{
+        //    if (model == null)
+        //        throw new ReadModelException("Empty BagetModel");
+        //    Guid id = model.ID;
+        //    if (id == null)
+        //        throw new ReadModelException("Empty ID of BagetModel " + model);
+        //    Baget baget = database.BagetRep.GetByID(id);
+        //    if (baget == null)
+        //        throw new ReadModelException("No Baget with such ID " + id);
+        //    return baget;
+        //}
 
         //public OrderModel LoadOrder(Guid id)
         //{

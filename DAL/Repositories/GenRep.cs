@@ -33,10 +33,10 @@ namespace DAL.Repositories
             db.SaveChanges();
         }
 
-        public IEnumerable<T> Find(Func<T, bool> predicate)
-        {
-            return set.AsNoTracking().Where(predicate).ToList();
-        }
+        //public IEnumerable<T> Find(Func<T, bool> predicate)
+        //{
+        //    return set.AsNoTracking().Where(predicate).ToList();
+        //}
 
         public IEnumerable<T> GetAll()
         {
@@ -54,22 +54,22 @@ namespace DAL.Repositories
             db.SaveChanges();
         }
 
-        private IQueryable<T> Include(params Expression<Func<T, object>>[] includeProperties)
-        {
-            IQueryable<T> query = set.AsNoTracking();
-            return includeProperties
-                .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
-        }
+        //private IQueryable<T> Include(params Expression<Func<T, object>>[] includeProperties)
+        //{
+        //    IQueryable<T> query = set.AsNoTracking();
+        //    return includeProperties
+        //        .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+        //}
 
-        public virtual IEnumerable<T> GetAllInclude(params Expression<Func<T, object>>[] includeProperties)
-        {
-            return Include(includeProperties).ToList();
-        }
+        //public virtual IEnumerable<T> GetAllInclude(params Expression<Func<T, object>>[] includeProperties)
+        //{
+        //    return Include(includeProperties).ToList();
+        //}
 
-        public virtual IEnumerable<T> FindInclude(Func<T, bool> predicate, params Expression<Func<T, object>>[] includeProperties)
-        {
-            var query = Include(includeProperties);
-            return query.Where(predicate).ToList();
-        }
+        //public virtual IEnumerable<T> FindInclude(Func<T, bool> predicate, params Expression<Func<T, object>>[] includeProperties)
+        //{
+        //    var query = Include(includeProperties);
+        //    return query.Where(predicate).ToList();
+        //}
     }
 }

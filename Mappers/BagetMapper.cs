@@ -1,5 +1,4 @@
 ﻿using Entities;
-using Mappers.Util;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -14,9 +13,6 @@ namespace Mappers
     {
         public static BagetModel MapToModel(this Baget entity)
         {
-            if (entity == null)
-                throw new ValidationException("Empty Baget entity");
-
             return new BagetModel
             {
                 ID = entity.ID,
@@ -32,82 +28,28 @@ namespace Mappers
 
         public static void UpdateBagetEntity(this Baget entity, BagetModel model)
         {
-            if (model == null)
-                throw new ValidationException("Empty BagetModel");
-
-            if (entity == null)
-                throw new ValidationException("Empty Baget entity");
-
-            if (model.Amount == null)
-                throw new ValidationException("Empty amount");
-            if (!int.TryParse(model.Amount, out int amount))
-                throw new ValidationException("Incorrect amount", model.Amount);
-            entity.Amount = amount;
-
-            if (model.Lenght == null)
-                throw new ValidationException("Empty lenght");
-            if (!Double.TryParse(model.Lenght, out Double lenght))
-                throw new ValidationException("Incorrect lenght", model.Lenght);
-            entity.Lenght = lenght;
-
-            if (model.Width == null)
-                throw new ValidationException("Empty width");
-            if (!Double.TryParse(model.Width, out Double width))
-                throw new ValidationException("Incorrect width", model.Width);
-            entity.Width = width; 
-            
-
-            if (model.OrderID == null || model.OrderID == Guid.Empty)
-                throw new ValidationException("Empty Order ID");
+            entity.Amount = int.Parse(model.Amount);
+            entity.Lenght = double.Parse(model.Lenght);
+            entity.Width = double.Parse(model.Width);
             entity.Order_ID = model.OrderID;
-
-            if (model.TypeID == null || model.TypeID == Guid.Empty)
-                throw new ValidationException("Empty Type ID");
             entity.Type_ID = model.TypeID;
         }
 
         public static Baget NewBagetEntity(this BagetModel model)
         {
-            if (model == null)
-                throw new ValidationException("Empty BagetModel");
-
-            Baget entity = new Baget();
-
-            if (model.Amount == null)
-                throw new ValidationException("Empty amount");
-            if (!int.TryParse(model.Amount, out int amount))
-                throw new ValidationException("Incorrect amount", model.Amount);
-            entity.Amount = amount;
-
-            if (model.Lenght == null)
-                throw new ValidationException("Empty lenght");
-            if (!Double.TryParse(model.Lenght, out Double lenght))
-                throw new ValidationException("Incorrect lenght", model.Lenght);
-            entity.Lenght = lenght;
-
-            if (model.Width == null)
-                throw new ValidationException("Empty width");
-            if (!Double.TryParse(model.Width, out Double width))
-                throw new ValidationException("Incorrect width", model.Width);
-            entity.Width = width;
-
-
-            if (model.OrderID == null || model.OrderID == Guid.Empty)
-                throw new ValidationException("Empty Order ID");
-            entity.Order_ID = model.OrderID;
-
-            if (model.TypeID == null || model.TypeID == Guid.Empty)
-                throw new ValidationException("Empty Type ID");
-            entity.Type_ID = model.TypeID;
-
-            return entity;
+            return new Baget
+            {
+                ID = Guid.NewGuid(),
+                Amount = int.Parse(model.Amount),
+                Lenght = double.Parse(model.Lenght),
+                Width = double.Parse(model.Width),
+                Order_ID = model.OrderID,
+                Type_ID = model.TypeID
+            };
         }
         public static ObservableCollection<BagetModel> MapToModelList(
             this IEnumerable<Baget> entities)
         {
-            if (entities == null)
-                throw new ValidationException("Empty BagetModel list");
-
             return new ObservableCollection<BagetModel>(
                 from entity in entities select MapToModel(entity));
         }

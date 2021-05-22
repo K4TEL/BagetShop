@@ -11,11 +11,8 @@ namespace BLL.Infrastructure
     public class ReadModelException : Exception
     {
         //public string Property { get; protected set; }
-        //public CustomException(string message, string prop, Exception inner) 
-        //    : base(message)
-        //{
-        //    this.Property = prop;
-        //}
+        public ReadModelException(string message, Exception inner)
+            : base(message, inner) { }
 
         //public CustomException(string message, string prop) : base(message)
         //{

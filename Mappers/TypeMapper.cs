@@ -1,5 +1,4 @@
 ﻿using Entities;
-using Mappers.Util;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -14,9 +13,6 @@ namespace Mappers
     {
         public static TypeModel MapToModel(this BagType entity)
         {
-            if (entity == null)
-                throw new ValidationException("Empty Type entity");
-
             return new TypeModel
             {
                 ID = entity.ID,
@@ -30,9 +26,6 @@ namespace Mappers
         public static ObservableCollection<TypeModel> MapToModelList(
             this IEnumerable<BagType> entities)
         {
-            if (entities == null)
-                throw new ValidationException("Empty Type list");
-
             return new ObservableCollection<TypeModel>
                 (from entity in entities select MapToModel(entity));
         }

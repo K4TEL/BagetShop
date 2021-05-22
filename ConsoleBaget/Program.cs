@@ -1,5 +1,6 @@
 ﻿using BLL.Infrastructure;
 using BLL.Interfaces;
+using ConsoleBaget.Validators;
 using Models;
 using Ninject;
 using Ninject.Modules;
@@ -19,6 +20,9 @@ namespace ConsoleBaget
         static ITypeServ typeServ;
         static IOrderServ orderServ;
         static IBagetServ bagetServ;
+
+        static OrderValidator orderValidator;
+        static BagetValidator bagetValidator;
         static void Main(string[] args)
         {
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandleException);
@@ -32,6 +36,9 @@ namespace ConsoleBaget
                 typeServ = kernel.Get<ITypeServ>();
                 orderServ = kernel.Get<IOrderServ>();
                 bagetServ = kernel.Get<IBagetServ>();
+
+                orderValidator = new OrderValidator();
+                bagetValidator = new BagetValidator();
             }
             catch
             {
@@ -49,7 +56,7 @@ namespace ConsoleBaget
                 Console.WriteLine("Database error");
                 Environment.Exit(0);
             }
-            Test();
+            //Test();
             Menu();
         }
         static void Test()
@@ -82,10 +89,10 @@ namespace ConsoleBaget
 
             OrderModel order = orderServ.LoadAll().ToList()[0];
             Console.WriteLine("Order " + order);
-            Console.WriteLine(orderServ.showMaterials(order));
+            Console.WriteLine(orderServ.showMaterials(orderValidator.EmptyIDCheck(order)));
 
             order.Customer = "Jimmy";
-            order = orderServ.Save(order, false);
+            order = orderServ.Save(orderValidator.Validate(order), false);
             Console.WriteLine("Order changed " + order);
 
             Console.WriteLine("================================= BAGET NEW");
@@ -95,18 +102,23 @@ namespace ConsoleBaget
             BagetModel baget = new BagetModel();
             baget.OrderID = order.ID;
             baget.Lenght = "5,77";
-            baget.Width = "5,5";
-            baget.Amount = "4";
+            baget.Width = "5,9";
+            baget.Amount = "7";
             baget.TypeID = typeServ.LoadAll()[0].ID;
 
             Console.WriteLine("Baget " + baget);
-            baget = bagetServ.Save(baget, true);
+            baget = bagetServ.Save(bagetValidator.Validate(baget), true);
             Console.WriteLine("Baget changed and saved " + baget);
 
             Console.WriteLine("All bagets " + bagetServ.LoadAll().Count);
 
-            baget = bagetServ.Load(baget.ID);
+            baget = bagetServ.Load(bagetValidator.EmptyIDCheck(baget).ID);
             Console.WriteLine("Baget get by ID " + baget);
+
+            TypeModel type = bagetServ.LoadType(bagetValidator.EmptyIDCheck(baget).ID);
+            Console.WriteLine("Type of Baget" + type);
+            foreach (MaterialModel m in type.Materials)
+                Console.WriteLine("-Material " + m);
 
             Console.WriteLine("================================= ORDER NEW");
 
@@ -114,7 +126,7 @@ namespace ConsoleBaget
 
             order = new OrderModel();
             order.Customer = "Daria";
-            order = orderServ.Save(order, true);
+            order = orderServ.Save(orderValidator.Validate(order), true);
             Console.WriteLine("Order saved " + order);
 
             Console.WriteLine("All orders " + orderServ.LoadAll().Count);
@@ -125,10 +137,10 @@ namespace ConsoleBaget
             baget.Width = "5,59";
             baget.Amount = "6";
             baget.TypeID = typeServ.LoadAll()[1].ID;
-            order = orderServ.AddBaget(order, baget);
+            order = orderServ.AddBaget(orderValidator.EmptyIDCheck(order), bagetValidator.Validate(baget));
             Console.WriteLine("Baget added to Order " + order);
 
-            order = orderServ.Load(order.ID);
+            order = orderServ.Load(orderValidator.EmptyIDCheck(order).ID);
             Console.WriteLine("Order get by ID " + order);
 
             Console.WriteLine("================================= BAGET CHANGES AND DEL");
@@ -140,35 +152,33 @@ namespace ConsoleBaget
             Console.WriteLine("Baget changed " + baget);
 
             Console.WriteLine("All bagets " + bagetServ.LoadAll().Count);
-
-            baget = bagetServ.Save(baget, false);
+            baget = bagetServ.Save(bagetValidator.Validate(baget), false);
             Console.WriteLine("Baget changed and saved " + baget);
 
-            order = orderServ.Load(order.ID);
+            order = orderServ.Load(orderValidator.EmptyIDCheck(order).ID);
             Console.WriteLine("Order get by ID " + order);
             Console.WriteLine("Baget in order " + order.Bagets[0]);
 
             Console.WriteLine("All bagets " + bagetServ.LoadAll().Count);
-
-            order = orderServ.DelBaget(order, baget);
+            order = orderServ.DelBaget(orderValidator.EmptyIDCheck(order), bagetValidator.EmptyIDCheck(baget));
             Console.WriteLine("Baget deleted from Order " + order);
 
             Console.WriteLine("All bagets " + bagetServ.LoadAll().Count);
-            order = orderServ.Load(order.ID);
+            order = orderServ.Load(orderValidator.EmptyIDCheck(order).ID);
             Console.WriteLine("Order get by ID " + order);
 
             Console.WriteLine("================================= ORDER DEL");
 
             Console.WriteLine("All orders " + orderServ.LoadAll().Count);
 
-            orderServ.Del(order);
+            orderServ.Del(orderValidator.EmptyIDCheck(order));
             Console.WriteLine("Order deleted");
 
             Console.WriteLine("All orders " + orderServ.LoadAll().Count);
             Console.WriteLine("All bagets " + bagetServ.LoadAll().Count);
 
             order = orderServ.LoadAll()[0];
-            orderServ.Del(order);
+            orderServ.Del(orderValidator.EmptyIDCheck(order));
             Console.WriteLine("Order with bagets deleted");
 
             Console.WriteLine("All orders " + orderServ.LoadAll().Count);
@@ -248,65 +258,26 @@ namespace ConsoleBaget
                 case "1":
                     Console.WriteLine("Index of Order");
                     string id = Console.ReadLine();
-                    if (!int.TryParse(id, out int index1) || index1 > orderServ.LoadAll().Count)
-                    {
-                        Console.WriteLine("Incorrect index");
-                        Menu();
-                    }
-                    OrderModel order = orderServ.LoadAll()[index1];
+                    OrderModel order = orderServ.LoadAll()[int.Parse(id)];
                     Console.WriteLine("Order " + order);
                     for (int i = 0; i < order.Bagets.Count; i++)
                         Console.WriteLine(i + " - Baget " + order.Bagets[i]);
                     Order(order);
-                    //try
-                    //{
-                    //    OrderModel order = orderServ.LoadAll()[index];
-                    //    Console.WriteLine("Order " + order);
-                    //    for (int i = 0; i < order.Bagets.Count; i++)
-                    //        Console.WriteLine(i + " - Baget " + order.Bagets[i]);
-                    //    Order(order);
-                    //}
-                    //catch { Console.WriteLine("XXX Order not found XXX"); }
                     break;
                 case "2":
                     Console.WriteLine("Index of Baget"); ;
                     id = Console.ReadLine();
-                    if (!int.TryParse(id, out int index2) || index2 > bagetServ.LoadAll().Count)
-                    {
-                        Console.WriteLine("Incorrect index");
-                        Menu();
-                    }
-                    BagetModel baget = bagetServ.LoadAll().ToList()[index2];
+                    BagetModel baget = bagetServ.LoadAll().ToList()[int.Parse(id)];
                     Console.WriteLine("Baget " + baget);
                     Baget(baget);
-                    //try
-                    //{
-                    //    BagetModel baget = bagetServ.LoadAll().ToList()[index2];
-                    //    Console.WriteLine("Baget " + baget);
-                    //    Baget(baget);
-                    //}
-                    //catch { Console.WriteLine("XXX Baget not found XXX"); }
                     break;
                 case "3":
                     Console.WriteLine("Index of Type");
                     id = Console.ReadLine();
-                    if (!int.TryParse(id, out int index3) || index3 > typeServ.LoadAll().Count)
-                    {
-                        Console.WriteLine("Incorrect index");
-                        Menu();
-                    }
-                    TypeModel bagtype = typeServ.LoadAll().ToList()[index3];
+                    TypeModel bagtype = typeServ.LoadAll().ToList()[int.Parse(id)];
                     Console.WriteLine("Type " + bagtype);
                     foreach (MaterialModel m in bagtype.Materials)
                         Console.WriteLine("-Material " + m);
-                    //try
-                    //{
-                    //    TypeModel bagtype = typeServ.LoadAll().ToList()[index3];
-                    //    Console.WriteLine("Type " + bagtype);
-                    //    foreach (MaterialModel m in bagtype.Materials)
-                    //        Console.WriteLine("-Material " + m);
-                    //}
-                    //catch { Console.WriteLine("XXX Type not found XXX"); }
                     break;
                 case "4":
                     Menu();
@@ -322,6 +293,7 @@ namespace ConsoleBaget
             Console.WriteLine("1 - Edit");
             Console.WriteLine("2 - Del");
             Console.WriteLine("3 - Back to Order");
+
             string command = Console.ReadLine();
 
             switch (command)
@@ -331,11 +303,11 @@ namespace ConsoleBaget
                     break;
                 case "2":
                     OrderModel order = orderServ.Load(baget.OrderID);
-                    order = orderServ.DelBaget(order, baget);
+                    order = orderServ.DelBaget(orderValidator.EmptyIDCheck(order), bagetValidator.EmptyIDCheck(baget));
                     Console.WriteLine("Baget deleted " + order);
                     break;
                 case "3":
-                    order = orderServ.Load(baget.OrderID);
+                    order = orderServ.Load(bagetValidator.EmptyIDCheck(baget).OrderID);
                     Console.WriteLine("Order " + order);
                     for (int i = 0; i < order.Bagets.Count; i++)
                         Console.WriteLine(i + " - Baget " + order.Bagets[i]);
@@ -362,14 +334,14 @@ namespace ConsoleBaget
             switch (command)
             {
                 case "0":
-                    Console.WriteLine(orderServ.showMaterials(order));
+                    Console.WriteLine(orderServ.showMaterials(orderValidator.EmptyIDCheck(order)));
                     break;
                 case "1":
                     Console.WriteLine("================================= EDIT ORDER");
                     OrderEdit(order, false);
                     break;
                 case "2":
-                    orderServ.Del(order);
+                    orderServ.Del(orderValidator.EmptyIDCheck(order));
                     Console.WriteLine("Order deleted");
                     break;
                 case "3":
@@ -383,21 +355,8 @@ namespace ConsoleBaget
                         Console.WriteLine(i + " - Baget " + order.Bagets[i]);
                     Console.WriteLine("Index of Baget");
                     string id = Console.ReadLine();
-                    if (!int.TryParse(id, out int index) || index > order.Bagets.Count)
-                    {
-                        Console.WriteLine("Incorrect index");
-                        Menu();
-                    }
-                    baget = order.Bagets[index];
+                    baget = order.Bagets[int.Parse(id)];
                     Console.WriteLine("Baget " + baget);
-                    //Baget(baget);
-                    //try
-                    //{
-                    //    baget = order.Bagets[index];
-                    //    Console.WriteLine("Baget " + baget);
-                    //    Baget(baget);
-                    //}
-                    //catch { Console.WriteLine("XXX Baget not found XXX"); }
                     break;
                 case "5":
                     Menu();
@@ -415,28 +374,11 @@ namespace ConsoleBaget
             string value = Console.ReadLine();
             if (value == "")
                 baget.TypeID = isNew ? typeServ.LoadAll()[0].ID : baget.TypeID;
-            else if (!int.TryParse(value, out int index) || index > typeServ.LoadAll().Count)
-            {
-                Console.WriteLine("Incorrect index");
-                Menu();
-            }
             else
             {
-                TypeModel bagtype = typeServ.LoadAll()[index];
+                TypeModel bagtype = typeServ.LoadAll()[int.Parse(value)];
                 baget.TypeID = bagtype.ID;
             }
-            
-                //try
-                //{
-                //    TypeModel bagtype = typeServ.LoadAll()[index];
-                //    baget.TypeID = bagtype.ID;
-                //}
-                //catch
-                //{
-                //    Console.WriteLine("XXX Type not found XXX");
-                //    return;
-                //}
-            
 
             Console.WriteLine("Width " + baget.Width);
             value = Console.ReadLine();
@@ -457,14 +399,8 @@ namespace ConsoleBaget
             else
                 baget.Amount = value;
 
-            baget = bagetServ.Save(baget, isNew);
+            baget = bagetServ.Save(bagetValidator.Validate(baget), isNew);
             Console.WriteLine("Baget saved " + baget);
-            //try
-            //{
-            //    baget = bagetServ.Save(baget, isNew);
-            //    Console.WriteLine("Baget saved " + baget);
-            //}
-            //catch { Console.WriteLine("XXX Baget not saved XXX"); }
         }
         static void OrderEdit(OrderModel order, bool isNew)
         {
@@ -474,14 +410,8 @@ namespace ConsoleBaget
                 order.Customer = isNew ? "???" : order.Customer;
             else
                 order.Customer = value;
-            order = orderServ.Save(order, isNew);
+            order = orderServ.Save(orderValidator.Validate(order), isNew);
             Console.WriteLine("Order saved " + order);
-            //try
-            //{
-            //    order = orderServ.Save(order, isNew);
-            //    Console.WriteLine("Order saved " + order);
-            //}
-            //catch { Console.WriteLine("XXX Order not saved XXX"); }
         }
         static void Menu()
         {
@@ -543,10 +473,15 @@ namespace ConsoleBaget
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Oops, something went wrong!");
             Console.WriteLine((e.ExceptionObject as Exception).Message);
-
+            if ((e.ExceptionObject as Exception).InnerException != null)
+                Console.WriteLine((e.ExceptionObject as Exception).InnerException);
             Console.ResetColor();
-            Debug.WriteLine((e.ExceptionObject as Exception).InnerException);
-            Menu();
+
+            Console.WriteLine(e.ExceptionObject.ToString());
+
+            Console.WriteLine("Press Enter to Exit");
+            Console.ReadLine();
+            Environment.Exit(0);
         }
     }
 }
