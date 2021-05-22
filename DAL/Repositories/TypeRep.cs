@@ -21,9 +21,12 @@ namespace DAL.Repositories
         }
         public BagType Load(Guid id)
         {
-            return set
+            BagType type = set
                 .Include(t => t.Materials)
                 .FirstOrDefault(t => t.ID == id);
+            if (type == null)
+                throw new Exception("Can't fount BagType with ID " + id);
+            return type;
         }
 
         public IEnumerable<BagType> LoadAll()

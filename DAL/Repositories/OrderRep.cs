@@ -22,10 +22,13 @@ namespace DAL.Repositories
 
         public Order Load(Guid id)
         {
-            return set
+            Order order =  set
                 .Include(o => o.Bagets
                 .Select(b => b.Type))
                 .FirstOrDefault(e => e.ID == id);
+            if (order == null)
+                throw new Exception("Can't fount Order with ID " + id);
+            return order;
         }
 
         public IEnumerable<Order> LoadAll()
