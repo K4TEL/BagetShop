@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
+using Validators;
 using Validators.Validators;
 using WpfBaget.Command;
 
@@ -23,6 +24,18 @@ namespace WpfBaget.ViewModels
                 OnPropertyChanged("SwitchView");
             }
         }
+
+        private bool error;
+        public bool Error
+        {
+            get { return error; }
+            set
+            {
+                error = value;
+                OnPropertyChanged("isError");
+            }
+        }
+
         private OrderValidator orderValidator;
         private BagetValidator bagetValidator;
 
@@ -47,22 +60,38 @@ namespace WpfBaget.ViewModels
                         BagetModel baget = obj as BagetModel;
 
                         baget.TypeID = SelectedType.ID;
-                        if (edit)
+                        try
                         {
-                            SelectedBaget = bagetServ.Save(bagetValidator.Validate(baget), !edit);
-                            SelectedOrder = orderServ.Load(bagetValidator.EmptyIDCheck(SelectedBaget).OrderID);
+                            baget = bagetValidator.Validate(baget);
+                            if (edit)
+                            {
+                                SelectedBaget = bagetServ.Save(baget, !edit);
+                                SelectedOrder = orderServ.Load(bagetValidator.EmptyIDCheck(SelectedBaget).OrderID);
+                            }
+                            else
+                                SelectedOrder = orderServ.AddBaget(orderValidator.EmptyIDCheck(SelectedOrder),
+                                    baget);
+
+                            SelectedType = null;
+                            SelectedBaget = null;
+                            SwitchView = 0;
+
+                            OnPropertyChanged("Bagets");
+                            OnPropertyChanged("Orders");
+
+                        } catch (ValidationException e)
+                        {
+                            string ErrorMessage = e.Message + "\n";
+                            if (e.Property != null)
+                                ErrorMessage += "Model: " + e.Model + "\n"
+                                        + "Incorrect value: " + e.Property + "\n";
+
+                            ErrorMessage += "Please check your data and repeat the action\n";
+
+                            MessageBox.Show(ErrorMessage, "Error",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
                         }
-                        else
-                            SelectedOrder = orderServ.AddBaget(orderValidator.EmptyIDCheck(SelectedOrder), 
-                                bagetValidator.Validate(baget));
-
-                        SelectedType = null;
-                        SelectedBaget = null;
-                        SwitchView = 0;
-
-                        OnPropertyChanged("Bagets");
-                        OnPropertyChanged("Orders");
-
                     }, (obj) => SelectedBaget != null));
             }
         }

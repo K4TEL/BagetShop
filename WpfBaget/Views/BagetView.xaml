@@ -7,8 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Height="auto" Width="auto">
-
     <Grid>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="390*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
@@ -16,8 +16,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
         <GridSplitter Grid.Row="1" Grid.Column="0" 
@@ -56,41 +55,8 @@
                 CommandParameter="{Binding SelectedBaget}"
                 HorizontalAlignment="Right"/>
 
-
-        <ListBox x:Name="typeList" ItemsSource="{Binding Types}"
-                 SelectedItem="{Binding SelectedType}" 
-                 Grid.Column="1" Grid.RowSpan="3"
-                 Background="Black" Foreground="White" SelectedIndex="0">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Margin="5">
-                        <TextBlock Text="{Binding Path=Title}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-
-
-        <StackPanel Grid.Column="2" Grid.RowSpan="3">
-
-            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 0 0 0">
-            <Run Text="Type : "/>
-            <Run Text="{Binding Path=SelectedType.Title}"/>
-            </TextBlock>
-
-            <ListBox x:Name="bagetList" ItemsSource="{Binding Materials}"
-                 Background="Black" Foreground="White"
-                 HorizontalContentAlignment="Stretch">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock>
-                <Run Text="{Binding Path=Name}"/>
-                <Run Text="{Binding Path=Amount}"/>
-                <Run Text="{Binding Path=Unit}"/>
-                        </TextBlock>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </StackPanel>
+        <local:TypeList Grid.Column="1" Grid.RowSpan="3">
+        </local:TypeList>
+        
     </Grid>
 </UserControl>

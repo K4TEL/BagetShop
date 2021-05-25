@@ -1,17 +1,23 @@
-﻿using Ninject;
+﻿using BLL.Infrastructure;
+using Ninject;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
+using System.Windows.Controls;
+using WpfBaget.Views;
 
 namespace WpfBaget.ViewModels
 {
     public class ViewModelLocator
     {
-        public ViewModelLocator() { }
+        public static IKernel kernel { get; private set; }
+        public ViewModelLocator() {
+            kernel = new StandardKernel(new ServiceModule("DefaultConnection"));
+            kernel.Load(Assembly.GetExecutingAssembly());
+            kernel.Bind<AppViewModel>().ToSelf().InSingletonScope();
+        }
 
-        public AppViewModel AppViewModel { get { return App.kernel.Get<AppViewModel>(); } }
-        public MainViewModel MainViewModel { get { return App.kernel.Get<MainViewModel>(); } }
-        public BagetViewModel BagetViewModel { get { return App.kernel.Get<BagetViewModel>(); } }
-        public OrderViewModel OrderViewModel { get { return App.kernel.Get<OrderViewModel>(); } }
+        public AppViewModel AppViewModel { get { return kernel.Get<AppViewModel>(); } }
     }
 }

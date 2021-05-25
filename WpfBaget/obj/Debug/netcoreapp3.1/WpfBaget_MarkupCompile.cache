@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;
 C:\Users\Admin\source\repos\BagetShop\WpfBaget\App.xaml
-3-2004250421
+5-1356863846
 
-12-338053454
+14-1348980686
 2022132146262
-Views\BagetView.xaml;Views\MainWindow.xaml;Views\OrderView.xaml;
+Views\BagetList.xaml;Views\BagetView.xaml;Views\MainWindow.xaml;Views\OrderView.xaml;Views\TypeList.xaml;
 
 False
 

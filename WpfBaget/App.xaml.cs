@@ -21,31 +21,18 @@ namespace WpfBaget
     /// </summary>
     public partial class App : Application
     {
-        public static IKernel kernel { get; set; }
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
             this.Dispatcher.UnhandledException += OnDispatcherUnhandleException;
 
-            kernel = new StandardKernel(new ServiceModule("DefaultConnection"));
-            kernel.Load(Assembly.GetExecutingAssembly());
-
-            kernel.Bind<BagetViewModel>().ToSelf().InTransientScope();
-            kernel.Bind<OrderViewModel>().ToSelf().InTransientScope();
-            kernel.Bind<MainViewModel>().ToSelf().InTransientScope();
-
-            kernel.Bind<AppViewModel>().ToSelf().InTransientScope();
-
-            kernel.Bind<ViewModelLocator>().ToSelf().InTransientScope();
-
-            kernel.Bind<MainWindow>().ToSelf().InTransientScope();
-
-            MainWindow main = kernel.Get<MainWindow>();
+            MainWindow main = new MainWindow();
             Current.MainWindow.Show();
         }
 
-        static void OnDispatcherUnhandleException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        static void OnDispatcherUnhandleException(object sender, 
+            System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
             e.Handled = true;
 
@@ -54,12 +41,6 @@ namespace WpfBaget
             if (e.Exception.InnerException != null)
                 ErrorMessage += "Inner Exception Message: " + e.Exception.InnerException.Message + "\n";
 
-            if (e.Exception.GetType() == typeof(ValidationException))
-            {
-                if ((e.Exception as ValidationException).Property != null)
-                    ErrorMessage += "Model: " + (e.Exception as ValidationException).Model + "\n"
-                            + "Incorrect value: " + (e.Exception as ValidationException).Property + "\n";
-            }
             ErrorMessage += "Please check your data and repeat the action\n" + "Continue?";
 
             if (MessageBox.Show(ErrorMessage, "Error", 

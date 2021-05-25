@@ -56,7 +56,10 @@
                 HorizontalAlignment="Right"/>
         </StackPanel>
 
-        <StackPanel Orientation="Vertical" Grid.Column="2" Grid.Row="0">
+        <local:BagetList Grid.Column="2">
+        </local:BagetList>
+
+        <!--<StackPanel Orientation="Vertical" Grid.Column="2" Grid.Row="0">
 
             <StackPanel Orientation="Horizontal" DataContext="{Binding SelectedOrder}"
                    VerticalAlignment="Top" HorizontalAlignment="Left">
@@ -90,7 +93,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-        </StackPanel>
+        </StackPanel>-->
 
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="2"
                     HorizontalAlignment="Left">

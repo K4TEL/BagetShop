@@ -218,10 +218,8 @@ namespace WpfBaget.ViewModels
             }
         }
 
-        public OrderViewModel(IOrderServ orderServ)
-        {
-            this.orderServ = orderServ;
-            
+        public OrderViewModel(MainViewModel main)
+        {          
             Orders = orderServ.LoadAll();
 
             SelectedOrder = null;

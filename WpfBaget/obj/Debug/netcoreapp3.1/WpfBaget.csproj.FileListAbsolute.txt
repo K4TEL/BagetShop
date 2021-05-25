@@ -85,3 +85,7 @@ C:\Users\Admin\source\repos\BagetShop\WpfBaget\bin\Debug\netcoreapp3.1\Mappers.p
 C:\Users\Admin\source\repos\BagetShop\WpfBaget\obj\Debug\netcoreapp3.1\App.baml
 C:\Users\Admin\source\repos\BagetShop\WpfBaget\bin\Debug\netcoreapp3.1\Validators.dll
 C:\Users\Admin\source\repos\BagetShop\WpfBaget\bin\Debug\netcoreapp3.1\Validators.pdb
+C:\Users\Admin\source\repos\BagetShop\WpfBaget\obj\Debug\netcoreapp3.1\Views\BagetList.g.cs
+C:\Users\Admin\source\repos\BagetShop\WpfBaget\obj\Debug\netcoreapp3.1\Views\BagetList.baml
+C:\Users\Admin\source\repos\BagetShop\WpfBaget\obj\Debug\netcoreapp3.1\Views\TypeList.g.cs
+C:\Users\Admin\source\repos\BagetShop\WpfBaget\obj\Debug\netcoreapp3.1\Views\TypeList.baml
