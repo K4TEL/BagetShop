@@ -419,54 +419,84 @@ namespace ConsoleBaget
         {
             while (true)
             {
-                Console.ForegroundColor = ConsoleColor.White;
-
-                Console.WriteLine("================================= MENU");
-                Console.WriteLine("0 - Test");
-                Console.WriteLine("1 - Get All");
-                Console.WriteLine("2 - Get");
-                Console.WriteLine("3 - New Order");
-                Console.WriteLine("4 - Exit");
-
-                Console.ResetColor();
-
-                string command = Console.ReadLine();
-
-                switch (command)
+                try
                 {
-                    case "0":
-                        Console.WriteLine("================================= TEST");
-                        Test();
-                        break;
-                    case "1":
-                        Console.WriteLine("================================= GET ALL MENU");
-                        Console.WriteLine("0 - All");
-                        Console.WriteLine("1 - Orders");
-                        Console.WriteLine("2 - Bagets");
-                        Console.WriteLine("3 - Types");
-                        Console.WriteLine("4 - Back");
-                        command = Console.ReadLine();
-                        GetAll(command);
-                        break;
-                    case "2":
-                        Console.WriteLine("================================= GET MENU");
-                        Console.WriteLine("1 - Order");
-                        Console.WriteLine("2 - Baget");
-                        Console.WriteLine("3 - Type");
-                        Console.WriteLine("4 - Back");
-                        command = Console.ReadLine();
-                        Get(command);
-                        break;
-                    case "3":
-                        Console.WriteLine("================================= NEW ORDER");
-                        OrderEdit(new OrderModel(), true);
-                        break;
-                    case "4":
-                        Environment.Exit(0);
-                        break;
-                    default:
-                        Console.WriteLine("??? Unknown command ???");
-                        break;
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                    Console.WriteLine("================================= MENU");
+                    Console.WriteLine("0 - Test");
+                    Console.WriteLine("1 - Get All");
+                    Console.WriteLine("2 - Get");
+                    Console.WriteLine("3 - New Order");
+                    Console.WriteLine("4 - Exit");
+
+                    Console.ResetColor();
+
+                    string command = Console.ReadLine();
+
+                    switch (command)
+                    {
+                        case "0":
+                            Console.WriteLine("================================= TEST");
+                            Test();
+                            break;
+                        case "1":
+                            Console.WriteLine("================================= GET ALL MENU");
+                            Console.WriteLine("0 - All");
+                            Console.WriteLine("1 - Orders");
+                            Console.WriteLine("2 - Bagets");
+                            Console.WriteLine("3 - Types");
+                            Console.WriteLine("4 - Back");
+                            command = Console.ReadLine();
+                            GetAll(command);
+                            break;
+                        case "2":
+                            Console.WriteLine("================================= GET MENU");
+                            Console.WriteLine("1 - Order");
+                            Console.WriteLine("2 - Baget");
+                            Console.WriteLine("3 - Type");
+                            Console.WriteLine("4 - Back");
+                            command = Console.ReadLine();
+                            Get(command);
+                            break;
+                        case "3":
+                            Console.WriteLine("================================= NEW ORDER");
+                            OrderEdit(new OrderModel(), true);
+                            break;
+                        case "4":
+                            Environment.Exit(0);
+                            break;
+                        default:
+                            Console.WriteLine("??? Unknown command ???");
+                            break;
+                    }
+                }
+                catch (ValidationException ex)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine("Model: " + ex.Model);
+                    Console.WriteLine("Incorrect value: " + ex.Property);
+                    Console.ResetColor();
+                }
+                catch (ArgumentOutOfRangeException ex)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(ex.Message);
+                    Console.ResetColor();
+                }
+                catch (FormatException ex)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(ex.Message);
+                    Console.ResetColor();
+                }
+                catch (DALException ex)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.InnerException.Message);
+                    Console.ResetColor();
                 }
             }
         }
@@ -476,27 +506,15 @@ namespace ConsoleBaget
             Console.WriteLine("Oops, something went wrong!");
 
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("Exception Message: " + (e.ExceptionObject as Exception).Message);
+            Console.WriteLine((e.ExceptionObject as Exception).Message);
 
             if ((e.ExceptionObject as Exception).InnerException != null)
-                Console.WriteLine("Inner Exception Message: " + (e.ExceptionObject as Exception).InnerException.Message);
-
-            if (e.ExceptionObject.GetType() == typeof(ValidationException)) 
-            {
-                if ((e.ExceptionObject as ValidationException).Property != null)
-                {
-                    Console.WriteLine("Model: " + (e.ExceptionObject
-                        as ValidationException).Model);
-                    Console.WriteLine("Incorrect value: " + (e.ExceptionObject
-                        as ValidationException).Property);
-                }
-            }
+                Console.WriteLine((e.ExceptionObject as Exception).InnerException.Message);
             
             Console.ResetColor();
 
             Console.WriteLine("Exception itself:");
             Console.WriteLine(e.ExceptionObject.ToString());
-
             Console.WriteLine("Press Enter to Exit");
             Console.ReadLine();
             Environment.Exit(0);

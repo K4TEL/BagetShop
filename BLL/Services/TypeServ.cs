@@ -29,11 +29,12 @@ namespace BLL.Services
         {
             try
             {
-                return database.TypeRep.Load(id).MapToModel();
+                BagType type = database.TypeRep.Load(id);
+                return type.MapToModel();
             }
-            catch (NullReferenceException e)
+            catch (ValidationException e)
             {
-                throw new DALException("Can't find BagType with ID " + id, e);
+                throw new MapperException(e.Message + " with ID " + id, e);
             }
         }
     }
