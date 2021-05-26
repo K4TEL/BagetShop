@@ -55,7 +55,6 @@ namespace WpfBaget
                     Application.Current.Shutdown();
                 }
             }
-            //MessageBox.Show(ErrorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

@@ -491,6 +491,12 @@ namespace ConsoleBaget
                     Console.WriteLine(ex.Message);
                     Console.ResetColor();
                 }
+                catch (InvalidOperationException ex)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(ex.Message);
+                    Console.ResetColor();
+                }
                 catch (DALException ex)
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;

@@ -10,7 +10,6 @@ namespace BLL.Infrastructure
     [Serializable]
     public class DALException : Exception
     {
-        //public string Property { get; protected set; }
         public DALException(string message, Exception inner) 
             : base(message, inner) { }
         protected DALException(SerializationInfo info, StreamingContext context)

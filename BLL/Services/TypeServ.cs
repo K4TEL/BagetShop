@@ -27,15 +27,10 @@ namespace BLL.Services
 
         public TypeModel Load(Guid id)
         {
-            try
-            {
-                BagType type = database.TypeRep.Load(id);
-                return type.MapToModel();
-            }
-            catch (ValidationException e)
-            {
-                throw new MapperException(e.Message + " with ID " + id, e);
-            }
+            BagType type = database.TypeRep.Load(id);
+            if (type == null)
+                throw new InvalidOperationException("Can't find type with ID " + id);
+            return type.MapToModel();
         }
     }
 }

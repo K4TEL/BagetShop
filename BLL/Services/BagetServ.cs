@@ -28,13 +28,10 @@ namespace BLL.Services
 
         public BagetModel Load(Guid id)
         {
-            try
-            {
-                return database.BagetRep.Load(id).MapToModel();
-            } catch (NullReferenceException e)
-            {
-                throw new DALException("Can't find Baget with ID " + id, e);
-            }
+            Baget baget = database.BagetRep.Load(id);
+            if (baget == null)
+                throw new InvalidOperationException("Can't find Baget with ID " + id);
+            return baget.MapToModel();
         }
 
         public BagetModel Save(BagetModel bagetDTO, bool isNew)
@@ -60,7 +57,7 @@ namespace BLL.Services
                 string action = "update";
                 if (isNew)
                     action = "create";
-                throw new DALException("BagetModel is incorrect! Unable to " + action + " Baget", e);
+                throw NewDALException(bagetDTO, action, e);
             } 
         }
 
@@ -72,13 +69,19 @@ namespace BLL.Services
             }
             catch (DbUpdateException e)
             {
-                throw new DALException("BagetModel is incorrect! Unable to delete Baget " + bagetDTO, e);
+                throw NewDALException(bagetDTO, "delete", e);
             }
         }
 
         public TypeModel LoadType(Guid id)
         {
             return database.BagetRep.LoadType(id).MapToModel();
+        }
+
+        private DALException NewDALException(object model, string action, Exception inner)
+        {
+            string description = model.GetType().Name + " is incorrect! Unable to " + action + model;
+            return new DALException(description, inner);
         }
 
         //private Baget Read(BagetModel model)

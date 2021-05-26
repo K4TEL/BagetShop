@@ -30,14 +30,10 @@ namespace BLL.Services
 
         public OrderModel Load(Guid id)
         {
-            try
-            {
-                return database.OrderRep.Load(id).MapToModel();
-            }
-            catch (NullReferenceException e)
-            {
-                throw new DALException("Can't find Order with ID " + id, e);
-            }
+            Order order = database.OrderRep.Load(id);
+            if (order == null)
+                throw new InvalidOperationException("Can't find Order with ID " + id);
+            return order.MapToModel();
         }
 
         public OrderModel Save(OrderModel orderDTO, bool isNew)
@@ -62,8 +58,7 @@ namespace BLL.Services
                 string action = "update";
                 if (isNew)
                     action = "create";
-
-                throw new DALException("OrderModel is incorrect! Unable to " + action + " Order " + orderDTO, e);
+                throw NewDALException(orderDTO, action, e);
             }
         }
 
@@ -75,7 +70,7 @@ namespace BLL.Services
             } 
             catch (DbUpdateException e)
             {
-                throw new DALException("OrderModel is incorrect! Unable to delete Order " + orderDTO, e);
+                throw NewDALException(orderDTO, "delete", e);
             }
         }
 
@@ -89,7 +84,7 @@ namespace BLL.Services
             }
             catch (DbUpdateException e)
             {
-                throw new DALException("BagetModel is incorrect! Unable to create Baget " + bagetDTO, e);
+                throw NewDALException(bagetDTO, "add", e);
             }
         }
 
@@ -140,8 +135,19 @@ namespace BLL.Services
 
         public OrderModel DelBaget(OrderModel orderDTO, BagetModel bagetDTO)
         {
-            database.BagetRep.Delete(database.BagetRep.GetByID(bagetDTO.ID));
-            return Load(orderDTO.ID);
+            try
+            {
+                database.BagetRep.Delete(database.BagetRep.GetByID(bagetDTO.ID));
+                return Load(orderDTO.ID);
+            } catch (DbUpdateException e)
+            {
+                throw NewDALException(bagetDTO, "delete", e);
+            }
+        }
+        private DALException NewDALException(object model, string action, Exception inner)
+        {
+            string description = model.GetType().Name + " is incorrect! Unable to " + action + model;
+            return new DALException(description, inner);
         }
         //private Baget ReadBaget(BagetModel model)
         //{
@@ -167,8 +173,8 @@ namespace BLL.Services
         //        throw new ReadModelException("No Order with such ID " + id);
         //    return order;
         //}
-        
-        
+
+
         //public ObservableCollection<BagetModel> LoadBagets(Guid id)
         //{
         //    return BagetMapper.MapToModelList(database.OrderRep.LoadBagets(Read(id).ID));
