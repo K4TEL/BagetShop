@@ -146,7 +146,7 @@ namespace BLL.Services
         }
         private DALException NewDALException(object model, string action, Exception inner)
         {
-            string description = model.GetType().Name + " is incorrect! Unable to " + action + model;
+            string description = model.GetType().Name + " is incorrect! Unable to " + action + " " + model;
             return new DALException(description, inner);
         }
         //private Baget ReadBaget(BagetModel model)

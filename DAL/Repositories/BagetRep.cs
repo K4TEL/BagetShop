@@ -30,25 +30,18 @@ namespace DAL.Repositories
 
         public BagType LoadType(Guid id)
         {
-            Baget baget = set
+            return set
                 .Include(b => b.Type)
-                .FirstOrDefault(b => b.ID == id);
-            if (baget == null)
-                throw new Exception("Can't fount Baget with ID " + id);
-            if (baget.Type == null)
-                throw new Exception("Can't fount BagType for Baget with ID " + id);
-            return baget.Type;
+                .FirstOrDefault(b => b.ID == id).
+                Type;
         }
 
         Baget IBagetRep.Load(Guid id)
         {
-            Baget baget = set
+            return set
                 .Include(b => b.Order)
                 .Include(b => b.Type)
                 .FirstOrDefault(b => b.ID == id);
-            if (baget == null)
-                throw new Exception("Can't fount Baget with ID " + id);
-            return baget;
         }
 
         IEnumerable<Baget> IBagetRep.LoadAll()

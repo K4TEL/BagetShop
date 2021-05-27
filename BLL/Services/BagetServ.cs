@@ -48,6 +48,8 @@ namespace BLL.Services
                 {
                     Baget baget = database.BagetRep.GetByID(bagetDTO.ID);
                     baget.UpdateBagetEntity(bagetDTO);
+                    //baget.ID = Guid.NewGuid();
+                    //baget.Order = database.OrderRep.GetAll().ElementAt(2);
                     database.BagetRep.Update(baget);
                     return Load(baget.ID);
                 }
@@ -80,7 +82,7 @@ namespace BLL.Services
 
         private DALException NewDALException(object model, string action, Exception inner)
         {
-            string description = model.GetType().Name + " is incorrect! Unable to " + action + model;
+            string description = model.GetType().Name + " is incorrect! Unable to " + action + " " + model;
             return new DALException(description, inner);
         }
 

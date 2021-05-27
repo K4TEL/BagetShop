@@ -80,7 +80,7 @@ namespace WpfBaget.ViewModels
                             OnPropertyChanged("Orders");
 
                         } 
-                        catch (ValidationException e)
+                        catch (ValidatorException e)
                         {
                             string ErrorMessage = e.Message + "\n";
                             if (e.Property != null)

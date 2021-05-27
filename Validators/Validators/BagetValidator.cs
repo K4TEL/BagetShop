@@ -13,14 +13,14 @@ namespace Validators.Validators
             model = EmptyModelCheck(model);
             Guid id = model.ID;
             if (id == null || id == Guid.Empty)
-                throw new ValidationException("Empty ID of " + model.GetType().Name + model);
+                throw NewEmptyValidatorException("ID", model);
             return model;
         }
 
         public BagetModel EmptyModelCheck(BagetModel model)
         {
             if (model == null)
-                throw new ValidationException("Empty BagetModel");
+                throw new ValidatorException("Empty BagetModel");
             return model;
         }
 
@@ -29,27 +29,40 @@ namespace Validators.Validators
             model = EmptyModelCheck(model);
 
             if (model.Amount == null || model.Amount.Length == 0)
-                throw new ValidationException("Empty Amount", model);
+                throw NewEmptyValidatorException("Amount", model);
             if (!int.TryParse(model.Amount, out int amount))
-                throw new ValidationException("Can't parse Amount", model.Amount, model);
+                throw NewParseValidatorException("Amount", model);
 
             if (model.Lenght == null || model.Lenght.Length == 0)
-                throw new ValidationException("Empty Lenght", model);
+                throw NewEmptyValidatorException("Lenght", model);
             if (!Double.TryParse(model.Lenght, out Double lenght))
-                throw new ValidationException("Can't parse Lenght", model.Lenght, model);
+                throw NewParseValidatorException("Lenght", model);
 
             if (model.Width == null || model.Width.Length == 0)
-                throw new ValidationException("Empty Width", model);
+                throw NewEmptyValidatorException("Width", model);
             if (!Double.TryParse(model.Width, out Double width))
-                throw new ValidationException("Can't parse Width", model.Width, model);
+                throw NewParseValidatorException("Width", model);
 
             if (model.OrderID == null || model.OrderID == Guid.Empty)
-                throw new ValidationException("Empty Order ID", model);
+                throw NewEmptyValidatorException("Order ID", model);
 
             if (model.TypeID == null || model.TypeID == Guid.Empty)
-                throw new ValidationException("Empty Type ID", model);
+                throw NewEmptyValidatorException("Type ID", model);
 
             return model;
+        }
+
+        private ValidatorException NewEmptyValidatorException(string property, BagetModel model)
+        {
+            string description = "Empty " + property + " of BagetModel";
+            return new ValidatorException(description, model);
+        }
+        private ValidatorException NewParseValidatorException(string property, BagetModel model)
+        {
+            string description = "Can't parse " + property + " of BagetModel";
+            return new ValidatorException(description, 
+                model.GetType().GetProperty(property).GetValue(model, null).ToString(),
+                model);
         }
     }
 }

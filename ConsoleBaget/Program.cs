@@ -5,6 +5,7 @@ using Ninject;
 using Ninject.Modules;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -260,6 +261,11 @@ namespace ConsoleBaget
                 case "1":
                     Console.WriteLine("Index of Order");
                     string id = Console.ReadLine();
+                    if (!ReadIndex(id, orderServ.LoadAll().Count))
+                    {
+                        Console.WriteLine("Invalid index: " + id);
+                        break;
+                    }
                     OrderModel order = orderServ.LoadAll()[int.Parse(id)];
                     Console.WriteLine("Order " + order);
                     for (int i = 0; i < order.Bagets.Count; i++)
@@ -269,6 +275,11 @@ namespace ConsoleBaget
                 case "2":
                     Console.WriteLine("Index of Baget"); ;
                     id = Console.ReadLine();
+                    if (!ReadIndex(id, bagetServ.LoadAll().Count))
+                    {
+                        Console.WriteLine("Invalid index: " + id);
+                        break;
+                    }
                     BagetModel baget = bagetServ.LoadAll().ToList()[int.Parse(id)];
                     Console.WriteLine("Baget " + baget);
                     Baget(baget);
@@ -276,6 +287,11 @@ namespace ConsoleBaget
                 case "3":
                     Console.WriteLine("Index of Type");
                     id = Console.ReadLine();
+                    if (!ReadIndex(id, typeServ.LoadAll().Count))
+                    {
+                        Console.WriteLine("Invalid index: " + id);
+                        break;
+                    }
                     TypeModel bagtype = typeServ.LoadAll().ToList()[int.Parse(id)];
                     Console.WriteLine("Type " + bagtype);
                     foreach (MaterialModel m in bagtype.Materials)
@@ -357,6 +373,11 @@ namespace ConsoleBaget
                         Console.WriteLine(i + " - Baget " + order.Bagets[i]);
                     Console.WriteLine("Index of Baget");
                     string id = Console.ReadLine();
+                    if (!ReadIndex(id, order.Bagets.Count))
+                    {
+                        Console.WriteLine("Invalid index: " + id);
+                        break;
+                    }
                     baget = order.Bagets[int.Parse(id)];
                     Console.WriteLine("Baget " + baget);
                     break;
@@ -378,10 +399,14 @@ namespace ConsoleBaget
                 baget.TypeID = isNew ? typeServ.LoadAll()[0].ID : baget.TypeID;
             else
             {
+                if (!ReadIndex(value, typeServ.LoadAll().Count))
+                {
+                    Console.WriteLine("Invalid index: " + value);
+                    return;
+                }
                 TypeModel bagtype = typeServ.LoadAll()[int.Parse(value)];
                 baget.TypeID = bagtype.ID;
             }
-
             Console.WriteLine("Width " + baget.Width);
             value = Console.ReadLine();
             if (value == "")
@@ -401,8 +426,20 @@ namespace ConsoleBaget
             else
                 baget.Amount = value;
 
-            baget = bagetServ.Save(bagetValidator.Validate(baget), isNew);
-            Console.WriteLine("Baget saved " + baget);
+            try
+            {
+                baget = bagetServ.Save(bagetValidator.Validate(baget), isNew);
+                Console.WriteLine("Baget saved " + baget);
+            }
+            catch (ValidatorException ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("Model: " + ex.Model);
+                if (ex.Property != null)
+                    Console.WriteLine("Incorrect value: " + ex.Property);
+                Console.ResetColor();
+            }
         }
         static void OrderEdit(OrderModel order, bool isNew)
         {
@@ -412,97 +449,94 @@ namespace ConsoleBaget
                 order.Customer = isNew ? "???" : order.Customer;
             else
                 order.Customer = value;
-            order = orderServ.Save(orderValidator.Validate(order), isNew);
-            Console.WriteLine("Order saved " + order);
+            try
+            {
+                order = orderServ.Save(orderValidator.Validate(order), isNew);
+                Console.WriteLine("Order saved " + order);
+            }
+            catch (ValidatorException ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("Model: " + ex.Model);
+                if (ex.Property != null)
+                    Console.WriteLine("Incorrect value: " + ex.Property);
+                Console.ResetColor();
+            }
+        }
+        static bool ReadIndex(string input, int list)
+        {
+            if (int.TryParse(input, out int index))
+            {
+                if (index < list && index >= 0)
+                    return true;
+            }
+            return false;
         }
         static void Menu()
         {
             while (true)
             {
-                try
+                Console.ForegroundColor = ConsoleColor.White;
+
+                Console.WriteLine("================================= MENU");
+                Console.WriteLine("0 - Test");
+                Console.WriteLine("1 - Get All");
+                Console.WriteLine("2 - Get");
+                Console.WriteLine("3 - New Order");
+                Console.WriteLine("4 - Exit");
+
+                Console.ResetColor();
+
+                string command = Console.ReadLine();
+
+                switch (command)
                 {
-                    Console.ForegroundColor = ConsoleColor.White;
-
-                    Console.WriteLine("================================= MENU");
-                    Console.WriteLine("0 - Test");
-                    Console.WriteLine("1 - Get All");
-                    Console.WriteLine("2 - Get");
-                    Console.WriteLine("3 - New Order");
-                    Console.WriteLine("4 - Exit");
-
-                    Console.ResetColor();
-
-                    string command = Console.ReadLine();
-
-                    switch (command)
-                    {
-                        case "0":
-                            Console.WriteLine("================================= TEST");
+                    case "0":
+                        Console.WriteLine("================================= TEST");
+                        try
+                        {
                             Test();
-                            break;
-                        case "1":
-                            Console.WriteLine("================================= GET ALL MENU");
-                            Console.WriteLine("0 - All");
-                            Console.WriteLine("1 - Orders");
-                            Console.WriteLine("2 - Bagets");
-                            Console.WriteLine("3 - Types");
-                            Console.WriteLine("4 - Back");
-                            command = Console.ReadLine();
-                            GetAll(command);
-                            break;
-                        case "2":
-                            Console.WriteLine("================================= GET MENU");
-                            Console.WriteLine("1 - Order");
-                            Console.WriteLine("2 - Baget");
-                            Console.WriteLine("3 - Type");
-                            Console.WriteLine("4 - Back");
-                            command = Console.ReadLine();
-                            Get(command);
-                            break;
-                        case "3":
-                            Console.WriteLine("================================= NEW ORDER");
-                            OrderEdit(new OrderModel(), true);
-                            break;
-                        case "4":
-                            Environment.Exit(0);
-                            break;
-                        default:
-                            Console.WriteLine("??? Unknown command ???");
-                            break;
-                    }
-                }
-                catch (ValidationException ex)
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine("Model: " + ex.Model);
-                    Console.WriteLine("Incorrect value: " + ex.Property);
-                    Console.ResetColor();
-                }
-                catch (ArgumentOutOfRangeException ex)
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine(ex.Message);
-                    Console.ResetColor();
-                }
-                catch (FormatException ex)
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine(ex.Message);
-                    Console.ResetColor();
-                }
-                catch (InvalidOperationException ex)
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine(ex.Message);
-                    Console.ResetColor();
-                }
-                catch (DALException ex)
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine(ex.InnerException.Message);
-                    Console.ResetColor();
+                        }
+                        catch (ValidatorException ex)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.WriteLine(ex.Message);
+                            Console.WriteLine("Model: " + ex.Model);
+                            if (ex.Property != null)
+                                Console.WriteLine("Incorrect value: " + ex.Property);
+                            Console.ResetColor();
+                        }
+                        break;
+                    case "1":
+                        Console.WriteLine("================================= GET ALL MENU");
+                        Console.WriteLine("0 - All");
+                        Console.WriteLine("1 - Orders");
+                        Console.WriteLine("2 - Bagets");
+                        Console.WriteLine("3 - Types");
+                        Console.WriteLine("4 - Back");
+                        command = Console.ReadLine();
+                        GetAll(command);
+                        break;
+                    case "2":
+                        Console.WriteLine("================================= GET MENU");
+                        Console.WriteLine("1 - Order");
+                        Console.WriteLine("2 - Baget");
+                        Console.WriteLine("3 - Type");
+                        Console.WriteLine("4 - Back");
+                        command = Console.ReadLine();
+                        Get(command);
+                        break;
+                    case "3":
+                        Console.WriteLine("================================= NEW ORDER");
+                        OrderEdit(new OrderModel(), true);
+                        break;
+                    case "4":
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        Console.WriteLine("??? Unknown command ???");
+                        break;
                 }
             }
         }
