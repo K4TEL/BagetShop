@@ -82,11 +82,9 @@ namespace WpfBaget.ViewModels
                         } 
                         catch (ValidatorException e)
                         {
-                            string ErrorMessage = e.Message + "\n";
+                            string ErrorMessage = e.Message + "\nModel: "+ e.Model + "\n";
                             if (e.Property != null)
-                                ErrorMessage += "Model: " + e.Model + "\n"
-                                        + "Incorrect value: " + e.Property + "\n";
-
+                                ErrorMessage += "Incorrect value: " + e.Property + "\n";
                             ErrorMessage += "Please check your data and repeat the action\n";
 
                             MessageBox.Show(ErrorMessage, "Error",

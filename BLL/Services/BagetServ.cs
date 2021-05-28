@@ -49,7 +49,7 @@ namespace BLL.Services
                     Baget baget = database.BagetRep.GetByID(bagetDTO.ID);
                     baget.UpdateBagetEntity(bagetDTO);
                     //baget.ID = Guid.NewGuid();
-                    //baget.Order = database.OrderRep.GetAll().ElementAt(2);
+                    baget.Order = database.OrderRep.GetAll().ElementAt(2);
                     database.BagetRep.Update(baget);
                     return Load(baget.ID);
                 }
@@ -77,7 +77,10 @@ namespace BLL.Services
 
         public TypeModel LoadType(Guid id)
         {
-            return database.BagetRep.LoadType(id).MapToModel();
+            BagType type = database.BagetRep.LoadType(id);
+            if (type == null)
+                throw new InvalidOperationException("Can't find Type for Baget with ID " + id);
+            return type.MapToModel();
         }
 
         private DALException NewDALException(object model, string action, Exception inner)

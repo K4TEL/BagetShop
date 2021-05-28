@@ -118,6 +118,7 @@ namespace ConsoleBaget
             baget = bagetServ.Load(bagetValidator.EmptyIDCheck(baget).ID);
             Console.WriteLine("Baget get by ID " + baget);
 
+            //TypeModel type = bagetServ.LoadType(Guid.NewGuid());
             TypeModel type = bagetServ.LoadType(bagetValidator.EmptyIDCheck(baget).ID);
             Console.WriteLine("Type of Baget" + type);
             foreach (MaterialModel m in type.Materials)
@@ -263,7 +264,9 @@ namespace ConsoleBaget
                     string id = Console.ReadLine();
                     if (!ReadIndex(id, orderServ.LoadAll().Count))
                     {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("Invalid index: " + id);
+                        Console.ResetColor();
                         break;
                     }
                     OrderModel order = orderServ.LoadAll()[int.Parse(id)];
@@ -277,7 +280,9 @@ namespace ConsoleBaget
                     id = Console.ReadLine();
                     if (!ReadIndex(id, bagetServ.LoadAll().Count))
                     {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("Invalid index: " + id);
+                        Console.ResetColor();
                         break;
                     }
                     BagetModel baget = bagetServ.LoadAll().ToList()[int.Parse(id)];
@@ -289,7 +294,9 @@ namespace ConsoleBaget
                     id = Console.ReadLine();
                     if (!ReadIndex(id, typeServ.LoadAll().Count))
                     {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("Invalid index: " + id);
+                        Console.ResetColor();
                         break;
                     }
                     TypeModel bagtype = typeServ.LoadAll().ToList()[int.Parse(id)];
@@ -375,7 +382,9 @@ namespace ConsoleBaget
                     string id = Console.ReadLine();
                     if (!ReadIndex(id, order.Bagets.Count))
                     {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("Invalid index: " + id);
+                        Console.ResetColor();
                         break;
                     }
                     baget = order.Bagets[int.Parse(id)];
@@ -401,7 +410,9 @@ namespace ConsoleBaget
             {
                 if (!ReadIndex(value, typeServ.LoadAll().Count))
                 {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("Invalid index: " + value);
+                    Console.ResetColor();
                     return;
                 }
                 TypeModel bagtype = typeServ.LoadAll()[int.Parse(value)];
@@ -546,11 +557,12 @@ namespace ConsoleBaget
             Console.WriteLine("Oops, something went wrong!");
 
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine((e.ExceptionObject as Exception).Message);
+            Console.WriteLine("Message: " + (e.ExceptionObject as Exception).Message);
 
             if ((e.ExceptionObject as Exception).InnerException != null)
-                Console.WriteLine((e.ExceptionObject as Exception).InnerException.Message);
-            
+                Console.WriteLine("Inner Message: " + (e.ExceptionObject as Exception).InnerException.Message);
+
+
             Console.ResetColor();
 
             Console.WriteLine("Exception itself:");

@@ -30,10 +30,10 @@ namespace DAL.Repositories
 
         public BagType LoadType(Guid id)
         {
-            return set
+            Baget baget = set
                 .Include(b => b.Type)
-                .FirstOrDefault(b => b.ID == id).
-                Type;
+                .FirstOrDefault(b => b.ID == id);
+            return baget != null ? baget.Type : null;
         }
 
         Baget IBagetRep.Load(Guid id)
